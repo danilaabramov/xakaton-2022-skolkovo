@@ -19,6 +19,10 @@ function App() {
     const [formatBlock, setFormatBlock] = useState(false)
     const [textEditor, setTextEditor] = useState(false)
 
+    const [duration, setDuration] = useState(0)
+    const [currentTime, setCurrenTime] = useState(0)
+
+
     // Кнопка звук
     const soundBtn = () => {
         setSoundBlock(s => !s)
@@ -87,12 +91,12 @@ function App() {
         let videoTrack = document.querySelector('.video-track'),
             time = document.querySelector('.timeLine');
 
-        document.querySelector('.play').addEventListener("click", function() {
+        document.querySelector('.play').addEventListener("click", function () {
             setPlay(true)
             vid.current.play()
         });
 
-        document.querySelector('.pause').addEventListener("click", function() {
+        document.querySelector('.pause').addEventListener("click", function () {
             setPlay(false)
             vid.current.pause()
         });
@@ -105,6 +109,7 @@ function App() {
         document.getElementById(`my-video`).addEventListener('play', () => {
 
             let inter = setInterval(() => {
+                setCurrenTime((document.getElementById(`my-video`).currentTime))
                 document.getElementById(`polzunok`).style.left = (document.getElementById(`my-video`).currentTime / document.getElementById(`my-video`).duration * (screens.length * 147)) + "px"
             }, 100)
 
@@ -123,9 +128,9 @@ function App() {
         })
 
 
-
         for (let j = 0; j < screens.length; ++j) {
             document.getElementById(`screen${j}`).addEventListener('loadeddata', function () {
+                setDuration(vid.current.duration)
                 document.getElementById(`screen${j}`).currentTime = document.getElementById(`screen${j}`).duration / screens.length / 2 + j * document.getElementById(`screen${j}`).duration / screens.length;
             });
         }
@@ -240,14 +245,16 @@ function App() {
                     kon.style.left = shag - 51 + "px";
                     konh.style.width = Number(konh.style.width.split("px")[0] - razn) + "px";
 
-                    video.currentTime = video.duration * (shag - 51 ) / (screens.length * 147)
+                    video.currentTime = video.duration * (shag - 51) / (screens.length * 147)
+                    setCurrenTime((document.getElementById(`my-video`).currentTime))
+
+
+                    // scree.style.width = (Number(konh.style.width.split("px")[0])+ screens.length * 147) + "px";
+                    // scree.style.left = (Number(kon.style.left.split("px")[0]) + screens.length * 147) + "px";
+
+                    //wb1.style.left = ( 9 + Number(elmnt.style.left.split("px")[0]))  + "px"
+                    wb1.style.width = (-9 + Number(elmnt.style.left.split("px")[0])) + "px";
                 }
-
-                // scree.style.width = (Number(konh.style.width.split("px")[0])+ screens.length * 147) + "px";
-                // scree.style.left = (Number(kon.style.left.split("px")[0]) + screens.length * 147) + "px";
-
-                //wb1.style.left = ( 9 + Number(elmnt.style.left.split("px")[0]))  + "px"
-                wb1.style.width = (-9 + Number(elmnt.style.left.split("px")[0]))  + "px";
 
             } else {
                 let elleft = Number(document.getElementById(`mydiv${Number(elmnt.id[5]) + 1}`).style.left.split("px")[0])
@@ -265,15 +272,14 @@ function App() {
                     konh.style.width = shag - 32 - Number(kon.style.left.split("px")[0]) - 3 + "px";
 
                     video.currentTime = video.duration * (shag - 29) / (screens.length * 147)
-
+                    setCurrenTime((document.getElementById(`my-video`).currentTime))
 
 
                     // scree.style.width = Number(konh.style.width.split("px")[0] + screens.length * 147) + "px";
                     // scree.style.left = Number(kon.style.left.split("px")[0]) + screens.length * 147 + "px";
 
-                    wb2.style.left = ( 9 + Number(elmnt.style.left.split("px")[0]))  + "px"
-                    wb2.style.width = (screens.length * 147 - Number(konh.style.width.split("px")[0]))  + "px";
-
+                    wb2.style.left = (9 + Number(elmnt.style.left.split("px")[0])) + "px"
+                    wb2.style.width = (screens.length * 147 - Number(konh.style.width.split("px")[0])) + "px";
 
                 }
             }
@@ -314,22 +320,22 @@ function App() {
 
         function elementDrag(e) {
 
-                e = e || window.event;
-                e.preventDefault();
-                // вычислить новую позицию курсора:
-                pos1 = pos3 - e.clientX;
-                pos2 = pos4 - e.clientY;
-                pos3 = e.clientX;
-                pos4 = e.clientY;
-                // установите новое положение элемента:
-                // elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-                let polz = document.getElementById(`polzunok`)
-                let scroll = document.getElementById('scroller').scrollLeft
+            e = e || window.event;
+            e.preventDefault();
+            // вычислить новую позицию курсора:
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            // установите новое положение элемента:
+            // elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+            let polz = document.getElementById(`polzunok`)
+            let scroll = document.getElementById('scroller').scrollLeft
 
-                polz.style.left = e.clientX + scroll - 40 + "px";
+            polz.style.left = e.clientX + scroll - 40 + "px";
 
-                video.currentTime = video.duration * (e.clientX + scroll  - 40) / (screens.length * 147)
-
+            video.currentTime = video.duration * (e.clientX + scroll - 40) / (screens.length * 147)
+            setCurrenTime((document.getElementById(`my-video`).currentTime))
         }
 
         function closeDragElement() {
@@ -340,14 +346,13 @@ function App() {
     }
 
     function color() {
-        document.querySelector('.video__left_panel__mixer__range').addEventListener("change", function(){
+        document.querySelector('.video__left_panel__mixer__range').addEventListener("change", function () {
             let val = this.value
             document.querySelector('.video__left_panel__mixer__range').style.background = `-moz-linear-gradient(left, #000 0%, #000 ${val}%, $grey ${val}%, $grey 100%) !important`
             console.log(val)
         });
 
     }
-
 
 
     return (
@@ -358,7 +363,7 @@ function App() {
                     <div className="video">
                         <div className="video__left_panel">
                             <div className="video__left_panel__mixer" style={{display: soundBlock ? '' : 'none'}}>
-                                <input type="range" min={0} max={100} step={1}  onInput={color}
+                                <input type="range" min={0} max={100} step={1} onInput={color}
                                        className="video__left_panel__mixer__range"/>
                             </div>
                             <button className="video__left_panel__sound" onClick={() => soundBtn()}>
@@ -405,7 +410,7 @@ function App() {
                                 <div className="video__show__clip__buttons">
                                     <div className="video__show__clip__time-line">
                                         {/*< REACT выводить время -->*/}
-                                        <p>2:45.03 / 45:30.00</p>
+                                        <p>{currentTime.toFixed(0)} / {duration.toFixed(0)}</p>
                                     </div>
                                     <div className="video__show__clip__arrows">
                                         <button className="video__show__clip__arrows__back">
@@ -427,11 +432,13 @@ function App() {
                                     </div>
                                 </div>
                                 <button className="video__show__clip__buttons__play">
-                                    <svg className="play" style={{display: play ? 'none' : ''}} width="33" height="33" viewBox="0 0 33 33" fill="none"
+                                    <svg className="play" style={{display: play ? 'none' : ''}} width="33" height="33"
+                                         viewBox="0 0 33 33" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path d="M9.625 8.25V24.75L23.375 16.5L9.625 8.25Z" fill="black"/>
                                     </svg>
-                                    <svg className="pause" style={{display: play ? '' : 'none'}} width="33" height="33" viewBox="0 0 33 33"
+                                    <svg className="pause" style={{display: play ? '' : 'none'}} width="33" height="33"
+                                         viewBox="0 0 33 33"
                                          fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M11 9.625H15.125V23.375H11V9.625ZM17.875 9.625H22V23.375H17.875V9.625Z"
                                               fill="black"/>
@@ -603,7 +610,8 @@ function App() {
                                         <p className="save__block__list__elem__str">Среднее</p>
                                         <p className="save__block__list__elem__num">До 720р</p>
                                     </li>
-                                    <li data-path="1080" className="save__block__list__elem" onClick={saveBlockListElem}>
+                                    <li data-path="1080" className="save__block__list__elem"
+                                        onClick={saveBlockListElem}>
                                         <p className="save__block__list__elem__str">Высокое</p>
                                         <p className="save__block__list__elem__num">До 1080р</p>
                                     </li>
@@ -612,19 +620,21 @@ function App() {
                             <div className="save__format" style={{display: formatBlock ? '' : 'none'}}>
                                 <h4 className="save__format__h">Выберите формат</h4>
                                 <ul className="save__format__list">
-                                    <li data-path="MP4" className="save__format__list__elem" onClick={saveFormatListElem}>MP4</li>
-                                    <li data-path="AVI" className="save__format__list__elem" onClick={saveFormatListElem}>AVI</li>
-                                    <li data-path="MKV" className="save__format__list__elem" onClick={saveFormatListElem}>MKV</li>
+                                    <li data-path="MP4" className="save__format__list__elem"
+                                        onClick={saveFormatListElem}>MP4
+                                    </li>
+                                    <li data-path="AVI" className="save__format__list__elem"
+                                        onClick={saveFormatListElem}>AVI
+                                    </li>
+                                    <li data-path="MKV" className="save__format__list__elem"
+                                        onClick={saveFormatListElem}>MKV
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-
-
-
-
 
 
             <div style={{display: 'flex', marginTop: 92}}>
@@ -639,19 +649,25 @@ function App() {
                 }}>
 
 
-                    <div  style={{ width: 0}}>
-                        <div id="screens" style={{display: 'flex', position: 'relative', width: screens.length * 147, height: 100, overflow: 'hidden'}}>
-                    {
-                        screens.map((item, index) => {
-                            return (
-                                <video id={`screen${index}`} width="147" height="83"
-                                       style={{top: 10, position: 'relative'}}>
-                                    <source src={require('./vid.mp4')}
-                                            type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/>
-                                </video>
-                            )
-                        })
-                    }
+                    <div style={{width: 0}}>
+                        <div id="screens" style={{
+                            display: 'flex',
+                            position: 'relative',
+                            width: screens.length * 147,
+                            height: 100,
+                            overflow: 'hidden'
+                        }}>
+                            {
+                                screens.map((item, index) => {
+                                    return (
+                                        <video id={`screen${index}`} width="147" height="83"
+                                               style={{top: 10, position: 'relative'}}>
+                                            <source src={require('./vid.mp4')}
+                                                    type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/>
+                                        </video>
+                                    )
+                                })
+                            }
                         </div>
                     </div>
 
@@ -690,10 +706,24 @@ function App() {
                     </div>
 
                     <div style={{width: 0}}>
-                        <div id="whiteblock1" style={{ position: 'relative', height: 83.5, width: 2, top: 9.5, backgroundColor: 'white', left: 0}}></div>
+                        <div id="whiteblock1" style={{
+                            position: 'relative',
+                            height: 83.5,
+                            width: 2,
+                            top: 9.5,
+                            backgroundColor: 'white',
+                            left: 0
+                        }}></div>
                     </div>
                     <div style={{width: 0}}>
-                        <div id="whiteblock2" style={{ position: 'relative', height: 83.5, width: 2, top: 9.5, backgroundColor: 'white', left: screens.length * 147  -2}}></div>
+                        <div id="whiteblock2" style={{
+                            position: 'relative',
+                            height: 83.5,
+                            width: 2,
+                            top: 9.5,
+                            backgroundColor: 'white',
+                            left: screens.length * 147 - 2
+                        }}></div>
                     </div>
 
 
@@ -706,12 +736,34 @@ function App() {
                         }}></div>
                     </div>
                     <div id="mydiv1" style={{left: screens.length * 147 - 11, top: 26.5}}>
-                        <div id="mydiv1header"><div style={{cursor: 'ew-resize', height: 50, width: 20, transform: 'translateX(-50%)', justifyContent: 'center', display: 'flex',  padding: 16.5, paddingRight: 0, paddingLeft: 0}}></div>
+                        <div id="mydiv1header">
+                            <div style={{
+                                cursor: 'ew-resize',
+                                height: 50,
+                                width: 20,
+                                transform: 'translateX(-50%)',
+                                justifyContent: 'center',
+                                display: 'flex',
+                                padding: 16.5,
+                                paddingRight: 0,
+                                paddingLeft: 0
+                            }}></div>
                         </div>
                     </div>
-                    <div id="mydiv2" style={{left:  11, top: 26.5}}>
-                        <div id="mydiv2header"> <div style={{cursor: 'ew-resize', height: 50, width: 20, transform: 'translateX(-50%)', justifyContent: 'center', display: 'flex', padding: 16.5, paddingRight: 0, paddingLeft: 0}}>
-                        </div>
+                    <div id="mydiv2" style={{left: 11, top: 26.5}}>
+                        <div id="mydiv2header">
+                            <div style={{
+                                cursor: 'ew-resize',
+                                height: 50,
+                                width: 20,
+                                transform: 'translateX(-50%)',
+                                justifyContent: 'center',
+                                display: 'flex',
+                                padding: 16.5,
+                                paddingRight: 0,
+                                paddingLeft: 0
+                            }}>
+                            </div>
                         </div>
                     </div>
 
@@ -719,7 +771,6 @@ function App() {
                     <div style={{width: 0}}>
                         <div id="polzunok" style={{left: 0, top: 0}}></div>
                     </div>
-
 
 
                 </div>
