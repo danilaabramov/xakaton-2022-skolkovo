@@ -10,8 +10,18 @@ function App() {
     const [width, setWidth] = useState(window.innerWidth)
     const [screens, setScreens] = useState(Array(10).fill(0))
 
+    const [play, setPlay] = useState(false)
+
+    const [soundBtn, setSoundBtn] = useState(false)
+    const [soundBlock, setSoundBlock] = useState(false)
+    const [opaccityBlock, setOpaccityBlock] = useState(false)
+    const [sizeBlock, setSizeBlock] = useState(false)
+    const [saveBlock, setSaveBlock] = useState(false)
+    const [formatBlock, setFormatBlock] = useState(false)
+    const [textEditor, setTextEditor] = useState(false)
 
     useEffect(() => {
+
 
         let video = document.querySelector('.video__show__clip'),
             btnPlay = document.querySelector('.play'),
@@ -21,16 +31,13 @@ function App() {
 
 
         btnPlay.addEventListener("click", function() {
-            document.querySelector('.play').classList.toggle('not_active');
-            document.querySelector('.pause').classList.toggle('not_active');
-            vid.current.play()// Запуск проигрывания
-            // Запуск интервала
+            setPlay(true)
+            vid.current.play()
         });
 
 
         btnPause.addEventListener("click", function() {
-            document.querySelector('.play').classList.toggle('not_active');
-            document.querySelector('.pause').classList.toggle('not_active');
+            setPlay(false)
             vid.current.pause()
         });
 
@@ -61,83 +68,77 @@ function App() {
 
 
         let soundBtn = document.querySelector('.video__left_panel__sound'),
-            soundBlock = document.querySelector('.video__left_panel__mixer'),
             opaccityBtn = document.querySelector('.video__right_panel__sound'),
-            opaccityBlock = document.querySelector('.video__right_panel__mixer'),
             sizeBtn = document.querySelector('.video__right_panel__delete'),
-            sizeBlock = document.querySelector('.video__right_panel__size'),
             saveBtn = document.querySelector('.save_btn'),
-            saveBlock = document.querySelector('.save__block'),
-            formatBlock = document.querySelector('.save__format'),
-            textEditor = document.querySelector('.text-editor__block'),
             textBtn = document.querySelector('.video__right_panel__cut');
 
 
         // Кнопка звук
-        document.querySelector('.video__left_panel__sound').addEventListener("click", function(e){
-            soundBlock.classList.toggle('not_active');
-            opaccityBlock.classList.add('not_active');
-            sizeBlock.classList.add('not_active');
-            saveBlock.classList.add('not_active');
-            formatBlock.classList.add('not_active');
-            textEditor.classList.add('not_active');
+        soundBtn.addEventListener("click", function(){
+            setSoundBlock(s => !s)
+            setOpaccityBlock(false)
+            setSizeBlock(false)
+            setSaveBlock(false)
+            setFormatBlock(false)
+            setTextEditor(false)
         });
 
         // Кнопка прозрачность лого
         opaccityBtn.addEventListener("click", function(e){
-            opaccityBlock.classList.toggle('not_active');
-            soundBlock.classList.add('not_active');
-            sizeBlock.classList.add('not_active');
-            saveBlock.classList.add('not_active');
-            formatBlock.classList.add('not_active');
-            textEditor.classList.add('not_active');
+            setOpaccityBlock(s => !s)
+            setSoundBlock(false)
+            setSizeBlock(false)
+            setSaveBlock(false)
+            setFormatBlock(false)
+            setTextEditor(false)
         });
 
         // Кнопка размера
         sizeBtn.addEventListener("click", function(e){
-            sizeBlock.classList.toggle('not_active');
-            soundBlock.classList.add('not_active');
-            opaccityBlock.classList.add('not_active');
-            saveBlock.classList.add('not_active');
-            formatBlock.classList.add('not_active');
-            textEditor.classList.add('not_active');
+            setSizeBlock(s => !s)
+            setSoundBlock(false)
+            setOpaccityBlock(false)
+            setSaveBlock(false)
+            setFormatBlock(false)
+            setTextEditor(false)
         });
 
         // Кнопка Сохранить
         saveBtn.addEventListener("click", function(e){
-            saveBlock.classList.toggle('not_active');
-            soundBlock.classList.add('not_active');
-            opaccityBlock.classList.add('not_active');
-            sizeBlock.classList.add('not_active');
-            formatBlock.classList.add('not_active');
-            textEditor.classList.add('not_active');
+            setSaveBlock(s => !s)
+            setSoundBlock(false)
+            setOpaccityBlock(false)
+            setSizeBlock(false)
+            setFormatBlock(false)
+            setTextEditor(false)
         });
 
         textBtn.addEventListener("click", function(e){
-            textEditor.classList.toggle('not_active');
-            soundBlock.classList.add('not_active');
-            opaccityBlock.classList.add('not_active');
-            sizeBlock.classList.add('not_active');
-            formatBlock.classList.add('not_active');
-            saveBlock.classList.add('not_active');
+            setTextEditor(s => !s)
+            setSoundBlock(false)
+            setOpaccityBlock(false)
+            setSizeBlock(false)
+            setFormatBlock(false)
+            setSaveBlock(false)
         })
 
         // Выбор качества
         document.querySelectorAll('.save__block__list__elem').forEach(function(i) {
             i.addEventListener("click", function(e) {
-                formatBlock.classList.remove('not_active');
-                soundBlock.classList.add('not_active');
-                opaccityBlock.classList.add('not_active');
-                sizeBlock.classList.add('not_active');
-                saveBlock.classList.add('not_active');
-                textEditor.classList.add('not_active');
+                setFormatBlock(true)
+                setSoundBlock(false)
+                setOpaccityBlock(false)
+                setSizeBlock(false)
+                setTextEditor(false)
+                setSaveBlock(false)
             });
         });
 
         // Выбор формата
         document.querySelectorAll('.save__format__list__elem').forEach(function(k) {
             k.addEventListener("click", function(e){
-                formatBlock.classList.add('not_active');
+                setFormatBlock(false)
             });
         });
 
@@ -380,7 +381,7 @@ function App() {
                 <div className="container">
                     <div className="video">
                         <div className="video__left_panel">
-                            <div className="video__left_panel__mixer not_active">
+                            <div className="video__left_panel__mixer" style={{display: soundBlock ? '' : 'none'}}>
                                 <input type="range" min={0} max={100} step={1}  onInput={color}
                                        className="video__left_panel__mixer__range"/>
                             </div>
@@ -450,11 +451,11 @@ function App() {
                                     </div>
                                 </div>
                                 <button className="video__show__clip__buttons__play">
-                                    <svg className="play" width="33" height="33" viewBox="0 0 33 33" fill="none"
+                                    <svg className="play" style={{display: play ? 'none' : ''}} width="33" height="33" viewBox="0 0 33 33" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path d="M9.625 8.25V24.75L23.375 16.5L9.625 8.25Z" fill="black"/>
                                     </svg>
-                                    <svg className="pause not_active" width="33" height="33" viewBox="0 0 33 33"
+                                    <svg className="pause" style={{display: play ? '' : 'none'}} width="33" height="33" viewBox="0 0 33 33"
                                          fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M11 9.625H15.125V23.375H11V9.625ZM17.875 9.625H22V23.375H17.875V9.625Z"
                                               fill="black"/>
@@ -463,7 +464,7 @@ function App() {
                             </div>
                         </div>
                         <div className="video__right_panel">
-                            <div className="video__right_panel__mixer not_active">
+                            <div className="video__right_panel__mixer" style={{display: opaccityBlock ? '' : 'none'}}>
                                 <input type="range" min="0" max="100" step="1" value="100"
                                        className="video__right_panel__mixer__range"/>
                             </div>
@@ -494,7 +495,7 @@ function App() {
                                         fill="black"/>
                                 </svg>
                             </button>
-                            <div className="video__right_panel__size not_active">
+                            <div className="video__right_panel__size" style={{display: sizeBlock ? '' : "none"}}>
                                 <h4 className="video__right_panel__size_h">Размер холста</h4>
                                 <div className="video__right_panel__size__block">
                                     <button className="video__right_panel__size__block__btn">16:9</button>
@@ -503,7 +504,7 @@ function App() {
                                     <button className="video__right_panel__size__block__btn">Свой</button>
                                 </div>
                             </div>
-                            <div className="text-editor__block not_active">
+                            <div className="text-editor__block" style={{display: textEditor ? '' : 'none'}}>
                                 <div className="text-editor__block__font">
                                     <h3 className="text-editor__block__font__h">Шрифт</h3>
                                     <form>
@@ -615,24 +616,24 @@ function App() {
                         </div>
                         <div className="save">
                             <button className="save_btn">Сохранить</button>
-                            <div className="save__block not_active">
+                            <div className="save__block" style={{display: saveBlock ? '' : 'none'}}>
                                 <h4 className="save__block_h">Выберите качество</h4>
                                 <ul className="save__block__list">
-                                    <li data-path="480" className="save__block__list__elem">
+                                    <li data-path="480" className="save__block__list__elem" >
                                         <p className="save__block__list__elem__str">Низкое</p>
                                         <p className="save__block__list__elem__num">До 480р</p>
                                     </li>
-                                    <li data-path="720" className="save__block__list__elem">
+                                    <li data-path="720" className="save__block__list__elem" >
                                         <p className="save__block__list__elem__str">Среднее</p>
                                         <p className="save__block__list__elem__num">До 720р</p>
                                     </li>
-                                    <li data-path="1080" className="save__block__list__elem">
+                                    <li data-path="1080" className="save__block__list__elem" >
                                         <p className="save__block__list__elem__str">Высокое</p>
                                         <p className="save__block__list__elem__num">До 1080р</p>
                                     </li>
                                 </ul>
                             </div>
-                            <div className="save__format not_active">
+                            <div className="save__format" style={{display: formatBlock ? '' : 'none'}}>
                                 <h4 className="save__format__h">Выберите формат</h4>
                                 <ul className="save__format__list">
                                     <li data-path="MP4" className="save__format__list__elem">MP4</li>
