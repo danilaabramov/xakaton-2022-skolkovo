@@ -410,7 +410,7 @@ function App() {
                                 <div className="video__show__clip__buttons">
                                     <div className="video__show__clip__time-line">
                                         {/*< REACT выводить время -->*/}
-                                        <p>{currentTime.toFixed(0)} / {duration.toFixed(0)}</p>
+                                        <p>{currentTime.toFixed(2)} / {duration.toFixed(2)}</p>
                                     </div>
                                     <div className="video__show__clip__arrows">
                                         <button className="video__show__clip__arrows__back">
