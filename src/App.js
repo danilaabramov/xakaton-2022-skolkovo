@@ -111,7 +111,7 @@ function App() {
             let inter = setInterval(() => {
                 setCurrenTime((document.getElementById(`my-video`).currentTime))
                 document.getElementById(`polzunok`).style.left = (document.getElementById(`my-video`).currentTime / document.getElementById(`my-video`).duration * (screens.length * 147)) + "px"
-            }, 100)
+            }, 10)
 
 
             document.getElementById(`my-video`).addEventListener('pause', () => {
@@ -769,7 +769,7 @@ function App() {
 
 
                     <div style={{width: 0}}>
-                        <div id="polzunok" style={{left: 0, top: 0, transition: 'all 0.1s linear'}}></div>
+                        <div id="polzunok" style={{left: 0, top: 0}}></div>
                     </div>
 
 
