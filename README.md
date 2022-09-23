@@ -1,0 +1,1 @@
+# xakaton-2022-skolkovo
