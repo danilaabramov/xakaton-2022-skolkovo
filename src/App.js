@@ -12,7 +12,6 @@ function App() {
 
     const [play, setPlay] = useState(false)
 
-    const [soundBtn, setSoundBtn] = useState(false)
     const [soundBlock, setSoundBlock] = useState(false)
     const [opaccityBlock, setOpaccityBlock] = useState(false)
     const [sizeBlock, setSizeBlock] = useState(false)
@@ -20,23 +19,80 @@ function App() {
     const [formatBlock, setFormatBlock] = useState(false)
     const [textEditor, setTextEditor] = useState(false)
 
+    // Кнопка звук
+    const soundBtn = () => {
+        setSoundBlock(s => !s)
+        setOpaccityBlock(false)
+        setSizeBlock(false)
+        setSaveBlock(false)
+        setFormatBlock(false)
+        setTextEditor(false)
+    };
+
+    // Кнопка прозрачность лого
+    const opaccityBtn = () => {
+        setOpaccityBlock(s => !s)
+        setSoundBlock(false)
+        setSizeBlock(false)
+        setSaveBlock(false)
+        setFormatBlock(false)
+        setTextEditor(false)
+    };
+
+    // Кнопка размера
+    const sizeBtn = () => {
+        setSizeBlock(s => !s)
+        setSoundBlock(false)
+        setOpaccityBlock(false)
+        setSaveBlock(false)
+        setFormatBlock(false)
+        setTextEditor(false)
+    };
+
+    // Кнопка Сохранить
+    const saveBtn = () => {
+        setSaveBlock(s => !s)
+        setSoundBlock(false)
+        setOpaccityBlock(false)
+        setSizeBlock(false)
+        setFormatBlock(false)
+        setTextEditor(false)
+    }
+
+    const textBtn = () => {
+        setTextEditor(s => !s)
+        setSoundBlock(false)
+        setOpaccityBlock(false)
+        setSizeBlock(false)
+        setFormatBlock(false)
+        setSaveBlock(false)
+    }
+
+    // Выбор качества
+    const saveBlockListElem = () => {
+        setFormatBlock(true)
+        setSoundBlock(false)
+        setOpaccityBlock(false)
+        setSizeBlock(false)
+        setTextEditor(false)
+        setSaveBlock(false)
+    }
+
+    // Выбор формата
+    const saveFormatListElem = () => {
+        setFormatBlock(false)
+    }
+
     useEffect(() => {
-
-
-        let video = document.querySelector('.video__show__clip'),
-            btnPlay = document.querySelector('.play'),
-            btnPause = document.querySelector('.pause'),
-            videoTrack = document.querySelector('.video-track'),
+        let videoTrack = document.querySelector('.video-track'),
             time = document.querySelector('.timeLine');
 
-
-        btnPlay.addEventListener("click", function() {
+        document.querySelector('.play').addEventListener("click", function() {
             setPlay(true)
             vid.current.play()
         });
 
-
-        btnPause.addEventListener("click", function() {
+        document.querySelector('.pause').addEventListener("click", function() {
             setPlay(false)
             vid.current.pause()
         });
@@ -65,82 +121,6 @@ function App() {
         window.addEventListener('resize', () => {
             setWidth(window.innerWidth)
         })
-
-
-        let soundBtn = document.querySelector('.video__left_panel__sound'),
-            opaccityBtn = document.querySelector('.video__right_panel__sound'),
-            sizeBtn = document.querySelector('.video__right_panel__delete'),
-            saveBtn = document.querySelector('.save_btn'),
-            textBtn = document.querySelector('.video__right_panel__cut');
-
-
-        // Кнопка звук
-        soundBtn.addEventListener("click", function(){
-            setSoundBlock(s => !s)
-            setOpaccityBlock(false)
-            setSizeBlock(false)
-            setSaveBlock(false)
-            setFormatBlock(false)
-            setTextEditor(false)
-        });
-
-        // Кнопка прозрачность лого
-        opaccityBtn.addEventListener("click", function(e){
-            setOpaccityBlock(s => !s)
-            setSoundBlock(false)
-            setSizeBlock(false)
-            setSaveBlock(false)
-            setFormatBlock(false)
-            setTextEditor(false)
-        });
-
-        // Кнопка размера
-        sizeBtn.addEventListener("click", function(e){
-            setSizeBlock(s => !s)
-            setSoundBlock(false)
-            setOpaccityBlock(false)
-            setSaveBlock(false)
-            setFormatBlock(false)
-            setTextEditor(false)
-        });
-
-        // Кнопка Сохранить
-        saveBtn.addEventListener("click", function(e){
-            setSaveBlock(s => !s)
-            setSoundBlock(false)
-            setOpaccityBlock(false)
-            setSizeBlock(false)
-            setFormatBlock(false)
-            setTextEditor(false)
-        });
-
-        textBtn.addEventListener("click", function(e){
-            setTextEditor(s => !s)
-            setSoundBlock(false)
-            setOpaccityBlock(false)
-            setSizeBlock(false)
-            setFormatBlock(false)
-            setSaveBlock(false)
-        })
-
-        // Выбор качества
-        document.querySelectorAll('.save__block__list__elem').forEach(function(i) {
-            i.addEventListener("click", function(e) {
-                setFormatBlock(true)
-                setSoundBlock(false)
-                setOpaccityBlock(false)
-                setSizeBlock(false)
-                setTextEditor(false)
-                setSaveBlock(false)
-            });
-        });
-
-        // Выбор формата
-        document.querySelectorAll('.save__format__list__elem').forEach(function(k) {
-            k.addEventListener("click", function(e){
-                setFormatBlock(false)
-            });
-        });
 
 
 
@@ -192,10 +172,6 @@ function App() {
                 selectSingle2.setAttribute('data-state', '');
             });
         }
-    }, [screens])
-
-    useEffect(() => {
-        setScreens(Array(10).fill(0))
     }, [])
 
 
@@ -385,7 +361,7 @@ function App() {
                                 <input type="range" min={0} max={100} step={1}  onInput={color}
                                        className="video__left_panel__mixer__range"/>
                             </div>
-                            <button className="video__left_panel__sound">
+                            <button className="video__left_panel__sound" onClick={() => soundBtn()}>
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -468,7 +444,7 @@ function App() {
                                 <input type="range" min="0" max="100" step="1" value="100"
                                        className="video__right_panel__mixer__range"/>
                             </div>
-                            <button className="video__right_panel__sound">
+                            <button className="video__right_panel__sound" onClick={opaccityBtn}>
                                 <svg width="19" height="19" viewBox="0 0 19 19" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -479,7 +455,7 @@ function App() {
                                         fill="#646464"/>
                                 </svg>
                             </button>
-                            <button className="video__right_panel__cut">
+                            <button className="video__right_panel__cut" onClick={textBtn}>
                                 <svg width="23" height="23" viewBox="0 0 23 23" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -487,7 +463,7 @@ function App() {
                                         fill="#646464"/>
                                 </svg>
                             </button>
-                            <button className="video__right_panel__delete">
+                            <button className="video__right_panel__delete" onClick={sizeBtn}>
                                 <svg width="23" height="23" viewBox="0 0 23 23" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -615,19 +591,19 @@ function App() {
                             </div>
                         </div>
                         <div className="save">
-                            <button className="save_btn">Сохранить</button>
+                            <button className="save_btn" onClick={saveBtn}>Сохранить</button>
                             <div className="save__block" style={{display: saveBlock ? '' : 'none'}}>
                                 <h4 className="save__block_h">Выберите качество</h4>
                                 <ul className="save__block__list">
-                                    <li data-path="480" className="save__block__list__elem" >
+                                    <li data-path="480" className="save__block__list__elem" onClick={saveBlockListElem}>
                                         <p className="save__block__list__elem__str">Низкое</p>
                                         <p className="save__block__list__elem__num">До 480р</p>
                                     </li>
-                                    <li data-path="720" className="save__block__list__elem" >
+                                    <li data-path="720" className="save__block__list__elem" onClick={saveBlockListElem}>
                                         <p className="save__block__list__elem__str">Среднее</p>
                                         <p className="save__block__list__elem__num">До 720р</p>
                                     </li>
-                                    <li data-path="1080" className="save__block__list__elem" >
+                                    <li data-path="1080" className="save__block__list__elem" onClick={saveBlockListElem}>
                                         <p className="save__block__list__elem__str">Высокое</p>
                                         <p className="save__block__list__elem__num">До 1080р</p>
                                     </li>
@@ -636,9 +612,9 @@ function App() {
                             <div className="save__format" style={{display: formatBlock ? '' : 'none'}}>
                                 <h4 className="save__format__h">Выберите формат</h4>
                                 <ul className="save__format__list">
-                                    <li data-path="MP4" className="save__format__list__elem">MP4</li>
-                                    <li data-path="AVI" className="save__format__list__elem">AVI</li>
-                                    <li data-path="MKV" className="save__format__list__elem">MKV</li>
+                                    <li data-path="MP4" className="save__format__list__elem" onClick={saveFormatListElem}>MP4</li>
+                                    <li data-path="AVI" className="save__format__list__elem" onClick={saveFormatListElem}>AVI</li>
+                                    <li data-path="MKV" className="save__format__list__elem" onClick={saveFormatListElem}>MKV</li>
                                 </ul>
                             </div>
                         </div>
