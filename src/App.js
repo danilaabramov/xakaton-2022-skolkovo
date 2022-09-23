@@ -769,44 +769,13 @@ function App() {
 
 
                     <div style={{width: 0}}>
-                        <div id="polzunok" style={{left: 0, top: 0}}></div>
+                        <div id="polzunok" style={{left: 0, top: 0, transition: 'all 0.1s linear'}}></div>
                     </div>
 
 
                 </div>
-
-
             </div>
-
-
-            {/*<div style={{display: 'flex', margin: "auto", width: 320}}>*/}
-            {/*    <div style={{*/}
-            {/*        width: 150,*/}
-            {/*        height: 50,*/}
-            {/*        backgroundColor: 'lightblue',*/}
-            {/*        borderRadius: 20,*/}
-            {/*        cursor: 'pointer',*/}
-            {/*        lineHeight: '50px',*/}
-            {/*        marginRight: 20*/}
-            {/*    }} onClick={() => {*/}
-            {/*        vid.current.play()*/}
-            {/*    }}>play*/}
-            {/*    </div>*/}
-            {/*    <div style={{*/}
-            {/*        width: 150,*/}
-            {/*        height: 50,*/}
-            {/*        backgroundColor: 'lightblue',*/}
-            {/*        borderRadius: 20,*/}
-            {/*        cursor: 'pointer',*/}
-            {/*        lineHeight: '50px'*/}
-            {/*    }} onClick={() => {*/}
-            {/*        vid.current.pause()*/}
-            {/*    }}>pause*/}
-            {/*    </div>*/}
-            {/*</div>*/}
         </div>
-
-
     );
 }
 
