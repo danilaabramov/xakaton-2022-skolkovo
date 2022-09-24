@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react'
 import './App.css';
 import './styles/editor.css'
 import './styles/style.css'
-import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import { MemoryRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function VideoEditor() {
 
@@ -1015,10 +1015,10 @@ function Main() {
 export default function App() {
     return (
         <Router>
-            <Switch>
-                <Route exact path="/"><Main/></Route>
-                <Route path="/video-editor"><VideoEditor/></Route>
-            </Switch>
+            <Routes>
+                <Route exact path="/" element={<Main/>}/>
+                <Route path="/video-editor" element={<VideoEditor/>}/>
+            </Routes>
         </Router>
     );
 }
