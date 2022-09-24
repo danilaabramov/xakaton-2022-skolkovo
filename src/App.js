@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react'
 import './App.css';
 import './styles/editor.css'
 import './styles/style.css'
-import { Routes, Route, Link } from "react-router-dom";
+import {Routes, Route, Link} from "react-router-dom";
 
 function VideoEditor() {
 
@@ -126,8 +126,7 @@ function VideoEditor() {
     }
 
     useEffect(() => {
-        let videoTrack = document.querySelector('.video-track'),
-            time = document.querySelector('.timeLine');
+
 
         document.querySelector('.play').addEventListener("click", function () {
             setPlay(true)
@@ -419,6 +418,7 @@ function VideoEditor() {
     const deleteVideo = () => {
         setVideos(Array(1).fill(0))
     }
+
 
     return (
         <div className="App" style={{overflowX: 'hidden'}}>
@@ -959,6 +959,66 @@ function Main() {
     window.addEventListener('resize', () => {
         setWidth(window.innerWidth)
     })
+
+    useEffect(() => {
+        let dropArea = document.getElementById('drop-area');
+
+        ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false)
+        })
+
+        function preventDefaults(e) {
+            e.preventDefault()
+            e.stopPropagation()
+        }
+
+
+        ;['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false)
+        })
+        ;['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false)
+        })
+
+        function highlight(e) {
+            dropArea.classList.add('highlight')
+        }
+
+        function unhighlight(e) {
+            dropArea.classList.remove('highlight')
+        }
+
+
+        dropArea.addEventListener('drop', handleDrop, false)
+
+        function handleDrop(e) {
+            let dt = e.dataTransfer
+            let files = dt.files
+            handleFiles(files)
+        }
+
+
+        function handleFiles(files) {
+            ([...files]).forEach(uploadFile)
+        }
+
+
+        function uploadFile(file) {
+            let url = '??????'
+            let formData = new FormData()
+            formData.append('file', file)
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+                .then(() => { /* Готово. Информируем пользователя */
+                })
+                .catch(() => { /* Ошибка. Информируем пользователя */
+                })
+        }
+
+    }, [])
+
     return (
         <div>
             <header>
@@ -972,28 +1032,29 @@ function Main() {
                 <section className="open-file" style={{overflow: 'hidden'}}>
                     <div style={{width: width - 8, display: 'flex'}}>
                         <div style={{margin: 'auto'}}>
-                        <h1 className="open-file__head" style={{color: 'white'}}>Легкий и простой редактор записей вебинаров</h1>
-                        <div id="drop-area">
-                            <form className="my-form">
-                                <label className="button" for="fileElem">Открыть файл</label>
-                                <div className="description">
-                                    <div className="description__img" style={{position: 'relative', top: 4}}>
-                                        <svg width="23" height="23" viewBox="0 0 23 23" fill="none"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M11.5 15.3334L15.3333 10.5417H12.4583V3.83337H10.5416V10.5417H7.66663L11.5 15.3334Z"
-                                                fill="white"/>
-                                            <path
-                                                d="M19.1666 17.25H3.83329V10.5416H1.91663V17.25C1.91663 18.307 2.77625 19.1666 3.83329 19.1666H19.1666C20.2237 19.1666 21.0833 18.307 21.0833 17.25V10.5416H19.1666V17.25Z"
-                                                fill="white"/>
-                                        </svg>
+                            <h1 className="open-file__head" style={{color: 'white'}}>Легкий и простой редактор записей
+                                вебинаров</h1>
+                            <div id="drop-area" >
+                                <form className="my-form">
+                                    <label className="button" for="fileElem">Открыть файл</label>
+                                    <div className="description">
+                                        <div className="description__img" style={{position: 'relative', top: 4}}>
+                                            <svg width="23" height="23" viewBox="0 0 23 23" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M11.5 15.3334L15.3333 10.5417H12.4583V3.83337H10.5416V10.5417H7.66663L11.5 15.3334Z"
+                                                    fill="white"/>
+                                                <path
+                                                    d="M19.1666 17.25H3.83329V10.5416H1.91663V17.25C1.91663 18.307 2.77625 19.1666 3.83329 19.1666H19.1666C20.2237 19.1666 21.0833 18.307 21.0833 17.25V10.5416H19.1666V17.25Z"
+                                                    fill="white"/>
+                                            </svg>
+                                        </div>
+                                        <p className="description__p">Или перетащите файл сюда</p>
                                     </div>
-                                    <p className="description__p">Или перетащите файл сюда</p>
-                                </div>
-                                <input type="file" id="fileElem" multiple accept="video/*"
-                                       onChange="handleFiles(this.files)"/>
-                            </form>
-                        </div>
+                                    <input type="file" id="fileElem" multiple accept="video/*"
+                                           onChange="handleFiles(this.files)"/>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -1015,10 +1076,10 @@ function Main() {
 export default function App() {
     return (
 
-            <Routes>
-                <Route exact path="/" element={<Main/>}/>
-                <Route path="/video-editor" element={<VideoEditor/>}/>
-            </Routes>
-      
+        <Routes>
+            <Route exact path="/" element={<Main/>}/>
+            <Route path="/video-editor" element={<VideoEditor/>}/>
+        </Routes>
+
     );
 }

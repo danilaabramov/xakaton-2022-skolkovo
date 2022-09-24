@@ -31,8 +31,9 @@ body {
   padding: 160px 0 130px;
   background: #262626;
 }
+
 #drop-area.highlight {
-  border-color: purple;
+  border: 1px solid purple;
 }
 .button {
   width: 270px;
