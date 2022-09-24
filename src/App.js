@@ -1,7 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react'
-import './App.css';
+import Client from './Client.js'
+import './App.css'
 import './styles/editor.css'
 import './styles/style.css'
+
+
+let client = new Client()
+
+client.Ping()
 
 function App() {
 
@@ -20,6 +26,7 @@ function App() {
     const [formatBlock, setFormatBlock] = useState(false)
     const [textEditor, setTextEditor] = useState(false)
 
+
     useEffect(() => {
 
 
@@ -27,7 +34,17 @@ function App() {
             btnPlay = document.querySelector('.play'),
             btnPause = document.querySelector('.pause'),
             videoTrack = document.querySelector('.video-track'),
-            time = document.querySelector('.timeLine');
+            time = document.querySelector('.timeLine'),
+            input_file = document.querySelector('#input_file'),
+            input_file_button = document.querySelector('#input_file_button');
+
+
+        const handleUpload = () => {
+          client.UploadVideo(input_file).then(video_id => {
+            console.log(`Uploaded as ${video_id}`)
+          })
+        }
+        input_file_button.addEventListener('click', handleUpload);
 
 
         btnPlay.addEventListener("click", function() {
@@ -192,6 +209,11 @@ function App() {
                 selectSingle2.setAttribute('data-state', '');
             });
         }
+
+
+      return () => {
+        input_file_button.removeEventListener('click', handleUpload)
+      }
     }, [screens])
 
     useEffect(() => {
