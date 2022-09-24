@@ -30,17 +30,17 @@ export default class Client {
 
 class ClientImpl {
 
-    BASE_URL = ''
+    BASE_URL = '/api'
 
 
     async Get(url) {
-        return await fetch(url, {
+        return await this.Request(url, {
             method: 'GET'
         })
     }
 
     async Post(url, data = {}) {
-        return await fetch(url, {
+        return await this.Request(url, {
             method: 'POST',
             body: data
         })
