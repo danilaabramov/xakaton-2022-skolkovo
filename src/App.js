@@ -352,21 +352,22 @@ function App() {
             konh0.style.width = Number(konh0.style.width.split('px')[0]) / 2 - 3 + 'px';
             konh1.style.width = konh0.style.width
 
-            kon1.style.left = Number(konh0.style.width.split('px')[0]) + 6 + 'px';
+            kon1.style.left = Number(konh0.style.width.split('px')[0]) + 6 + Number(kon0.style.left.split('px')[0]) + 'px';
 
             scree0.style.width = Number(scree0.style.width.split('px')[0]) / 2 + 'px';
             scree1.style.width = scree0.style.width
 
-            scree1.style.left = Number(scree0.style.width.split('px')[0]) + 'px';
+            scree1.style.left = Number(scree0.style.width.split('px')[0]) + Number(kon0.style.left.split('px')[0]) + 'px';
 
-            scree21.style.left = - Number(konh0.style.width.split('px')[0]) - 6 + 'px';
+            scree21.style.left = - Number(konh0.style.width.split('px')[0]) - 6 - Number(kon0.style.left.split('px')[0]) + 'px';
 
 
-            el0.style.left = Number(scree0.style.width.split('px')[0]) - 12.5 + 'px';
-
-            el21.style.left = Number(scree0.style.width.split('px')[0]) + 12.5 + 'px';
+            el21.style.left = Number(scree0.style.width.split('px')[0]) + 12.5  + Number(kon0.style.left.split('px')[0])+ 'px';
 
             el1.style.left = Number(el21.style.left.split('px')[0]) + Number(konh1.style.width.split('px')[0]) - 18.5 + 'px';
+
+
+            el0.style.left = Number(scree0.style.width.split('px')[0]) - 12.5 + Number(kon0.style.left.split('px')[0]) + 'px';
 
             // scree20.style.width = Number(scree20.style.width.split('px')[0]) / 2 + 'px';
             // scree21.style.width = Number(scree21.style.width.split('px')[0]) / 2 + 'px';
@@ -375,8 +376,7 @@ function App() {
 
 
     const cut = () => {
-        setVideos(Array(2).fill(0))
-        // cut2()
+        if (videos.length == 1) setVideos(Array(2).fill(0))
     }
 
     return (
@@ -715,7 +715,7 @@ function App() {
                 </section>
 
                 <div style={{marginTop: 92}}>
-                    <div id="scroller" style={{
+                    <div id="scroller" className="container" style={{
                         height: 120,
                         width: width - 80,
                         overflowY: 'hidden',
