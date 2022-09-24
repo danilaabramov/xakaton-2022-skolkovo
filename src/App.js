@@ -127,8 +127,8 @@ function App() {
             vid.current.pause()
         });
 
-        dragElement(document.getElementById("2mydiv"));
-        dragElement(document.getElementById("1mydiv"));
+        dragElement(document.getElementById("2mydiv0"));
+        dragElement(document.getElementById("1mydiv0"));
         dragElement2(document.getElementById("kontur"))
         dragElement2(document.getElementById("polzunok"))
 
@@ -202,8 +202,8 @@ function App() {
 
             let shag = (elmnt.offsetLeft - pos1 < screens.length * 147 + 29 ? (elmnt.offsetLeft - pos1 > 51 ? (elmnt.offsetLeft - pos1) : 51) : screens.length * 147 + 29)
 
-            if (elmnt.id === '2mydiv') {
-                let elleft = Number(document.getElementById(`1mydiv`).style.left.split("px")[0])
+            if (elmnt.id === '2mydiv0') {
+                let elleft = Number(document.getElementById(`1mydiv0`).style.left.split("px")[0])
 
                 let razn = shag - 51 - Number(kon.style.left.split("px")[0])
 
@@ -228,7 +228,7 @@ function App() {
                 }
 
             } else {
-                let elleft = Number(document.getElementById(`2mydiv`).style.left.split("px")[0])
+                let elleft = Number(document.getElementById(`2mydiv0`).style.left.split("px")[0])
 
 
                 let sdvig = (elleft < shag - 40 ? shag - 40 : elleft)
@@ -694,34 +694,28 @@ function App() {
                                             }}></div>
                                         </div>
 
-                                        <div id="1mydiv" className="mydiv1"
+                                        <div id={`1mydiv${index}`} className="mydiv1"
                                              style={{left: screens.length * 147 - 11, top: 26.5}}>
-                                            <div id="1mydivheader" className="mydiv1header">
+                                            <div id={`1mydiv${index}header`} className="mydiv1header">
                                                 <div style={{
                                                     cursor: 'ew-resize',
-                                                    height: 50,
+                                                    height: 83,
                                                     width: 20,
                                                     transform: 'translateX(-50%)',
-                                                    justifyContent: 'center',
-                                                    display: 'flex',
-                                                    padding: 16.5,
-                                                    paddingRight: 0,
-                                                    paddingLeft: 0
+                                                    position: 'relative',
+                                                    top: -18.5,
                                                 }}></div>
                                             </div>
                                         </div>
-                                        <div id="2mydiv" className="mydiv2" style={{left: 11, top: 26.5}}>
-                                            <div id="2mydivheader" className="mydiv2header">
+                                        <div id={`2mydiv${index}`} className="mydiv2" style={{left: 11, top: 26.5}}>
+                                            <div id={`2mydiv${index}header`} className="mydiv2header">
                                                 <div style={{
                                                     cursor: 'ew-resize',
-                                                    height: 50,
+                                                    height: 83,
                                                     width: 20,
                                                     transform: 'translateX(-50%)',
-                                                    justifyContent: 'center',
-                                                    display: 'flex',
-                                                    padding: 16.5,
-                                                    paddingRight: 0,
-                                                    paddingLeft: 0
+                                                    position: 'relative',
+                                                    top: -18.5
                                                 }}>
                                                 </div>
                                             </div>
