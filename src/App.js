@@ -219,8 +219,11 @@ function App() {
 
             let shag = 0
 
-            if(elmnt.id === '2mydiv1')
+            if(elmnt.id === '2mydiv1' && videos.length === 2)
                 shag = (elmnt.offsetLeft - pos1 < screens.length * 147 + 29 ? (elmnt.offsetLeft - pos1 > Number(document.getElementById(`1mydiv0`).style.left.split("px")[0]) + 61.9 ? (elmnt.offsetLeft - pos1) : Number(document.getElementById(`1mydiv0`).style.left.split("px")[0]) + 61.9) : screens.length * 147 + 29)
+            else if(elmnt.id === '1mydiv0' && videos.length === 2) {
+                shag = (elmnt.offsetLeft - pos1 < Number(document.getElementById(`2mydiv1`).style.left.split("px")[0]) + 18 ? (elmnt.offsetLeft - pos1 > 51 ? (elmnt.offsetLeft - pos1) : 51) : Number(document.getElementById(`2mydiv1`).style.left.split("px")[0]) + 18)
+            }
             else
                 shag =  (elmnt.offsetLeft - pos1 < screens.length * 147 + 29 ? (elmnt.offsetLeft - pos1 > 51 ? (elmnt.offsetLeft - pos1) : 51) : screens.length * 147 + 29)
 
@@ -271,7 +274,7 @@ function App() {
                     setCurrenTime((document.getElementById(`my-video`).currentTime))
 
                     let ts = timeSegments
-                    ts[index][1] = video.duration * (shag - 51) / (screens.length * 147)
+                    ts[index][1] = video.duration * (shag - 51) / (screens.length * 147) + 21
                     console.log(ts)
                     setTimeSegments(ts)
 
