@@ -217,7 +217,13 @@ function App() {
             let scree = document.getElementById(`screens${index}`)
             let scree2 = document.getElementById(`screens2${index}`)
 
-            let shag = (elmnt.offsetLeft - pos1 < screens.length * 147 + 29 ? (elmnt.offsetLeft - pos1 > 51 ? (elmnt.offsetLeft - pos1) : 51) : screens.length * 147 + 29)
+            let shag = 0
+
+            if(elmnt.id === '2mydiv1')
+                shag = (elmnt.offsetLeft - pos1 < screens.length * 147 + 29 ? (elmnt.offsetLeft - pos1 > Number(document.getElementById(`1mydiv0`).style.left.split("px")[0]) + 61.9 ? (elmnt.offsetLeft - pos1) : Number(document.getElementById(`1mydiv0`).style.left.split("px")[0]) + 61.9) : screens.length * 147 + 29)
+            else
+                shag =  (elmnt.offsetLeft - pos1 < screens.length * 147 + 29 ? (elmnt.offsetLeft - pos1 > 51 ? (elmnt.offsetLeft - pos1) : 51) : screens.length * 147 + 29)
+
 
             if (elmnt.id === `2mydiv${index}`) {
                 let elleft = Number(document.getElementById(`1mydiv${index}`).style.left.split("px")[0])
@@ -406,7 +412,7 @@ function App() {
     }
 
     return (
-        <div className="App">
+        <div className="App" style={{overflowX: 'hidden'}}>
             <header>
                 <section className="header">
                     <div className="container">
@@ -740,10 +746,13 @@ function App() {
                     </div>
                 </section>
 
+                <div style={{display: 'flex'}}>
                 <div style={{marginTop: 92}}>
-                    <div id="scroller" className="container" style={{
-                        height: 120,
-                        width: width - 80,
+
+
+                    <div id="scroller" style={{
+                        height: 140,
+                        width: width - 220,
                         overflowY: 'hidden',
                         display: 'flex',
                         padding: '0 20px',
@@ -841,6 +850,73 @@ function App() {
                         </div>
 
                     </div>
+                </div>
+
+                    <section className="road_section" style={{position: 'relative', top: 92}}>
+                        <div className="road">
+
+                            <div className="road__btn">
+                                <div className="road__btn__back">
+                                    <button className="road__btn__inside">
+                                        <svg width="37" height="38" viewBox="0 0 37 38" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1.75879 18.9769H35.1496" stroke="black" stroke-width="2"
+                                                  stroke-linecap="round"/>
+                                            <path d="M18.9307 36.1494L18.9307 1.80459" stroke="black" stroke-width="2"
+                                                  stroke-linecap="round"/>
+                                        </svg>
+                                    </button>
+                                    <div className="road__btn__block">
+                                        <div className="road__btn__block__video">
+                                            <svg width="19" height="19" viewBox="0 0 19 19" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M16.2083 0.875H2.79167C1.73462 0.875 0.875 1.73462 0.875 2.79167V16.2083C0.875 17.2654 1.73462 18.125 2.79167 18.125H16.2083C17.2654 18.125 18.125 17.2654 18.125 16.2083V2.79167C18.125 1.73462 17.2654 0.875 16.2083 0.875ZM6.625 8.54167V2.79167H12.375V8.54167H6.625ZM12.375 10.4583V16.2083H6.625V10.4583H12.375ZM2.79167 2.79167H4.70833V4.70833H2.79167V2.79167ZM2.79167 6.625H4.70833V8.54167H2.79167V6.625ZM2.79167 10.4583H4.70833V12.375H2.79167V10.4583ZM2.79167 14.2917H4.70833V16.2083H2.79167V14.2917ZM16.2103 16.2083H14.2917V14.2917H16.2103V16.2083ZM16.2093 12.375H14.2917V10.4583H16.2093V12.375ZM16.2093 8.54167H14.2917V6.625H16.2093V8.54167ZM14.2917 4.70833V2.79167H16.2083V4.70833H14.2917Z"
+                                                    fill="#335DF1"/>
+                                            </svg>
+                                            <h5 className="road__btn__block__video__p">Видео</h5>
+                                        </div>
+                                        <div className="road__btn__block__video">
+                                            <svg width="21" height="17" viewBox="0 0 21 17" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M6.18652 7.54163C6.98043 7.54163 7.62402 6.89804 7.62402 6.10413C7.62402 5.31022 6.98043 4.66663 6.18652 4.66663C5.39261 4.66663 4.74902 5.31022 4.74902 6.10413C4.74902 6.89804 5.39261 7.54163 6.18652 7.54163Z"
+                                                    fill="black"/>
+                                                <path
+                                                    d="M9.06152 10.4167L7.62402 8.50004L4.74902 12.3334H16.249L11.9365 6.58337L9.06152 10.4167Z"
+                                                    fill="black"/>
+                                                <path
+                                                    d="M18.1655 0.833374H2.83219C1.77515 0.833374 0.915527 1.693 0.915527 2.75004V14.25C0.915527 15.3071 1.77515 16.1667 2.83219 16.1667H18.1655C19.2226 16.1667 20.0822 15.3071 20.0822 14.25V2.75004C20.0822 1.693 19.2226 0.833374 18.1655 0.833374ZM2.83219 14.25V2.75004H18.1655L18.1674 14.25H2.83219Z"
+                                                    fill="black"/>
+                                            </svg>
+                                            <h5 className="road__btn__block__video__p">Изображение</h5>
+                                        </div>
+                                        <div className="road__btn__block__video">
+                                            <svg width="15" height="17" viewBox="0 0 15 17" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M0.791748 4.66671H2.70841V2.75004H5.82491L3.36008 14.25H0.791748V16.1667H8.45841V14.25H6.30025L8.76508 2.75004H12.2917V4.66671H14.2084V0.833374H0.791748V4.66671Z"
+                                                    fill="#646464"/>
+                                            </svg>
+                                            <h5 className="road__btn__block__video__p">Текст</h5>
+                                        </div>
+                                        <div className="road__btn__block__video">
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M11.1359 1.15579C11.047 1.06663 10.9414 0.995914 10.8251 0.947724C10.7089 0.899533 10.5842 0.874818 10.4583 0.875001H1.83333C1.57917 0.875001 1.33541 0.975968 1.15569 1.15569C0.975967 1.33541 0.875 1.57917 0.875 1.83333V10.4583C0.875 10.7133 0.975625 10.9567 1.15579 11.1359L8.82246 18.8025C8.91125 18.8918 9.01682 18.9627 9.1331 19.0111C9.24938 19.0594 9.37407 19.0843 9.5 19.0843C9.62593 19.0843 9.75062 19.0594 9.8669 19.0111C9.98318 18.9627 10.0887 18.8918 10.1775 18.8025L18.8025 10.1775C18.8916 10.0886 18.9623 9.98301 19.0105 9.86675C19.0587 9.75049 19.0835 9.62586 19.0835 9.5C19.0835 9.37414 19.0587 9.24951 19.0105 9.13325C18.9623 9.01699 18.8916 8.91138 18.8025 8.82246L11.1359 1.15579ZM9.5 16.7699L2.79167 10.0616V2.79167H10.0616L16.7699 9.5L9.5 16.7699Z"
+                                                    fill="black"/>
+                                                <path
+                                                    d="M6.142 7.58331C6.93855 7.58331 7.58429 6.93758 7.58429 6.14102C7.58429 5.34447 6.93855 4.69873 6.142 4.69873C5.34544 4.69873 4.69971 5.34447 4.69971 6.14102C4.69971 6.93758 5.34544 7.58331 6.142 7.58331Z"
+                                                    fill="black"/>
+                                            </svg>
+                                            <h5 className="road__btn__block__video__p">Логотип</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </main>
             <footer>
