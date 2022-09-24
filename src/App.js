@@ -158,7 +158,7 @@ function App() {
                 document.getElementById(`screen${j}`).currentTime = document.getElementById(`screen${j}`).duration / screens.length / 2 + j * document.getElementById(`screen${j}`).duration / screens.length;
             });
         }
- }, [])
+    }, [])
 
 
     function dragElement(elmnt) {
@@ -198,13 +198,7 @@ function App() {
             let kon = document.getElementById(`kontur`)
             let konh = document.getElementById(`konturheader`)
             let scree = document.getElementById(`screens`)
-
-            let end1 = document.getElementById(`end1`)
-            let end2 = document.getElementById(`end2`)
-            let end3 = document.getElementById(`end3`)
-            let end4 = document.getElementById(`end4`)
-            let wb1 = document.getElementById(`whiteblock1`)
-            let wb2 = document.getElementById(`whiteblock2`)
+            let scree2 = document.getElementById(`screens2`)
 
             let shag = (elmnt.offsetLeft - pos1 < screens.length * 147 + 30 ? (elmnt.offsetLeft - pos1 > 50 ? (elmnt.offsetLeft - pos1) : 50) : screens.length * 147 + 30)
 
@@ -218,21 +212,19 @@ function App() {
 
                 if (elleft > shag - 40) {
                     polz.style.left = shag - 51 + "px";
-                    end1.style.left = shag - 60 + "px";
-                    end2.style.left = shag - 60 + "px";
-
-                    kon.style.left = shag - 51 + "px";
-                    konh.style.width = Number(konh.style.width.split("px")[0] - razn) + "px";
 
                     video.currentTime = video.duration * (shag - 51) / (screens.length * 147)
                     setCurrenTime((document.getElementById(`my-video`).currentTime))
 
+                    kon.style.left = shag - 51 + "px";
 
-                    // scree.style.width = (Number(konh.style.width.split("px")[0])+ screens.length * 147) + "px";
-                    // scree.style.left = (Number(kon.style.left.split("px")[0]) + screens.length * 147) + "px";
+                    let w = Number(konh.style.width.split("px")[0] - razn)
+                    konh.style.width = w + "px";
 
-                    //wb1.style.left = ( 9 + Number(elmnt.style.left.split("px")[0]))  + "px"
-                    wb1.style.width = (-9 + Number(elmnt.style.left.split("px")[0])) + "px";
+                    scree.style.width = w + 6 + "px";
+                    scree.style.left = kon.style.left
+                    scree2.style.left = -shag + 51 + "px"
+
                 }
 
             } else {
@@ -245,20 +237,19 @@ function App() {
 
                 if (elleft < shag - 40) {
                     polz.style.left = shag - 29 + "px";
-                    end3.style.left = shag - 40 + "px";
-                    end4.style.left = shag - 40 + "px";
-
-                    konh.style.width = shag - 32 - Number(kon.style.left.split("px")[0]) - 3 + "px";
+                    // end3.style.left = shag - 40 + "px";
+                    // end4.style.left = shag - 40 + "px";
 
                     video.currentTime = video.duration * (shag - 29) / (screens.length * 147)
                     setCurrenTime((document.getElementById(`my-video`).currentTime))
 
+                    konh.style.width = shag - 35 - Number(kon.style.left.split("px")[0]) + "px";
 
-                    // scree.style.width = Number(konh.style.width.split("px")[0] + screens.length * 147) + "px";
-                    // scree.style.left = Number(kon.style.left.split("px")[0]) + screens.length * 147 + "px";
+                    scree.style.width = shag - 29 - Number(kon.style.left.split("px")[0]) + "px";
+                    //scree.style.left = Number(kon.style.left.split("px")[0]) + screens.length * 147 + "px";
 
-                    wb2.style.left = (9 + Number(elmnt.style.left.split("px")[0])) + "px"
-                    wb2.style.width = (screens.length * 147 - Number(konh.style.width.split("px")[0])) + "px";
+                    // wb2.style.left = (9 + Number(elmnt.style.left.split("px")[0])) + "px"
+                    // wb2.style.width = (screens.length * 147 - Number(konh.style.width.split("px")[0])) + "px";
 
                 }
             }
@@ -479,24 +470,29 @@ function App() {
                                         <h3 className="text-editor__block__font__h">Шрифт</h3>
                                         <form>
                                             <div className='__select' data-state={selectSingle ? 'active' : ''}>
-                                                <div onClick={selectSingle_title} className="__select__title" data-default="Open Sans">Open Sans
+                                                <div onClick={selectSingle_title} className="__select__title"
+                                                     data-default="Open Sans">Open Sans
                                                 </div>
                                                 <div className="__select__content">
                                                     <input id="singleSelect0" className="__select__input" type="radio"
                                                            name="singleSelect" checked/>
-                                                    <label htmlFor="singleSelect0" className="__select__label" onClick={selectSingle_labels}>Option
+                                                    <label htmlFor="singleSelect0" className="__select__label"
+                                                           onClick={selectSingle_labels}>Option
                                                         0</label>
                                                     <input id="singleSelect1" className="__select__input" type="radio"
                                                            name="singleSelect"/>
-                                                    <label htmlFor="singleSelect1" className="__select__label" onClick={selectSingle_labels}>Option
+                                                    <label htmlFor="singleSelect1" className="__select__label"
+                                                           onClick={selectSingle_labels}>Option
                                                         1</label>
                                                     <input id="singleSelect3" className="__select__input" type="radio"
                                                            name="singleSelect"/>
-                                                    <label htmlFor="singleSelect3" className="__select__label" onClick={selectSingle_labels}>Option
+                                                    <label htmlFor="singleSelect3" className="__select__label"
+                                                           onClick={selectSingle_labels}>Option
                                                         3</label>
                                                     <input id="singleSelect4" className="__select__input" type="radio"
                                                            name="singleSelect"/>
-                                                    <label htmlFor="singleSelect4" className="__select__label" onClick={selectSingle_labels}>Option
+                                                    <label htmlFor="singleSelect4" className="__select__label"
+                                                           onClick={selectSingle_labels}>Option
                                                         4</label>
                                                 </div>
                                             </div>
@@ -504,28 +500,34 @@ function App() {
                                         <div className="text-editor__block__font__etc">
                                             <form>
                                                 <div className="__select2" data-state={selectSingle2 ? 'active' : ''}>
-                                                    <div onClick={selectSingle_title2} className="__select__title2" data-default="Open Sans">32</div>
+                                                    <div onClick={selectSingle_title2} className="__select__title2"
+                                                         data-default="Open Sans">32
+                                                    </div>
                                                     <div className="__select__content2">
                                                         <input id="singleSelect0" className="__select__input2"
                                                                type="radio"
                                                                name="singleSelect" checked/>
                                                         <label htmlFor="singleSelect0"
-                                                               className="__select__label2"  onClick={selectSingle_labels2}>14</label>
+                                                               className="__select__label2"
+                                                               onClick={selectSingle_labels2}>14</label>
                                                         <input id="singleSelect1" className="__select__input2"
                                                                type="radio"
                                                                name="singleSelect"/>
                                                         <label htmlFor="singleSelect1"
-                                                               className="__select__label2"  onClick={selectSingle_labels2}>18</label>
+                                                               className="__select__label2"
+                                                               onClick={selectSingle_labels2}>18</label>
                                                         <input id="singleSelect3" className="__select__input2"
                                                                type="radio"
                                                                name="singleSelect"/>
                                                         <label htmlFor="singleSelect3"
-                                                               className="__select__label2"  onClick={selectSingle_labels2}>24</label>
+                                                               className="__select__label2"
+                                                               onClick={selectSingle_labels2}>24</label>
                                                         <input id="singleSelect4" className="__select__input2"
                                                                type="radio"
                                                                name="singleSelect"/>
                                                         <label htmlFor="singleSelect4"
-                                                               className="__select__label2"  onClick={selectSingle_labels2}>32</label>
+                                                               className="__select__label2"
+                                                               onClick={selectSingle_labels2}>32</label>
                                                     </div>
                                                 </div>
                                             </form>
@@ -630,11 +632,11 @@ function App() {
                     </div>
                 </section>
 
+                <div style={{marginTop: 92}}>
 
-                <div style={{display: 'flex', marginTop: 92}}>
 
                     <div id="scroller" style={{
-                        height: 110,
+                        height: 120,
                         width: width - 80,
                         overflowY: 'hidden',
                         display: 'flex',
@@ -642,89 +644,43 @@ function App() {
                         margin: '0 20px',
                     }}>
 
+                        <div style={{width: 0}}>
+                            <div style={{position: 'relative', width: screens.length * 147 + 20, top: 10, height: 83}}>
+                                <div style={{width: screens.length * 147, height: 83, backgroundColor: 'white'}}></div>
+                            </div>
+                        </div>
 
                         <div style={{width: 0}}>
                             <div id="screens" style={{
                                 display: 'flex',
                                 position: 'relative',
                                 width: screens.length * 147,
-                                height: 100,
-                                overflow: 'hidden'
+                                height: 83,
+                                overflow: 'hidden',
+                                top: 10,
+                                borderRadius: 9
                             }}>
-                                {
-                                    screens.map((item, index) => {
-                                        return (
-                                            <video id={`screen${index}`} width="147" height="83"
-                                                   style={{top: 10, position: 'relative'}}>
-                                                <source src={require('./vid.mp4')}
-                                                        type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/>
-                                            </video>
-                                        )
-                                    })
-                                }
+
+                                <div id="screens2" style={{
+                                    display: 'flex',
+                                    position: 'relative',
+                                    width: screens.length * 147,
+                                    height: 83,
+                                }}>
+                                    {
+                                        screens.map((item, index) => {
+                                            return (
+                                                <video id={`screen${index}`} width="147" height="83"
+                                                       style={{position: 'relative'}}>
+                                                    <source src={require('./vid.mp4')}
+                                                            type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/>
+                                                </video>
+                                            )
+                                        })
+                                    }
+                                </div>
                             </div>
                         </div>
-
-
-                        <div style={{width: 0, display: 'flex'}}>
-                            <img id="end1" src={require('./end.png')} style={{
-                                zIndex: 0,
-                                height: 9,
-                                left: -9,
-                                top: 9.5,
-                                position: "relative"
-                            }}></img>
-                        </div>
-                        <div style={{width: 0, display: 'flex'}}>
-                            <img id="end2" src={require('./end.png')} style={{
-                                zIndex: 0,
-                                height: 9,
-                                left: -9,
-                                top: 84,
-                                position: "relative",
-                                transform: 'rotate(180deg)'
-                            }}></img>
-                        </div>
-                        <div style={{width: 0, display: 'flex'}}>
-                            <img id="end3" src={require('./end.png')}
-                                 style={{
-                                     height: 9,
-                                     left: screens.length * 147 - 11,
-                                     top: 9.5,
-                                     position: "relative"
-                                 }}></img>
-                        </div>
-                        <div style={{width: 0, display: 'flex'}}>
-                            <img id="end4" src={require('./end.png')} style={{
-                                height: 9,
-                                left: screens.length * 147 - 11,
-                                top: 84,
-                                position: "relative",
-                                transform: 'rotate(180deg)'
-                            }}></img>
-                        </div>
-
-                        <div style={{width: 0}}>
-                            <div id="whiteblock1" style={{
-                                position: 'relative',
-                                height: 83.5,
-                                width: 2,
-                                top: 9.5,
-                                backgroundColor: 'white',
-                                left: 0
-                            }}></div>
-                        </div>
-                        <div style={{width: 0}}>
-                            <div id="whiteblock2" style={{
-                                position: 'relative',
-                                height: 83.5,
-                                width: 2,
-                                top: 9.5,
-                                backgroundColor: 'white',
-                                left: screens.length * 147 - 2
-                            }}></div>
-                        </div>
-
 
                         <div id="kontur" style={{left: 0, top: 10}}>
                             <div id="konturheader" style={{
@@ -734,6 +690,7 @@ function App() {
                                 border: '3px solid #31BE00',
                             }}></div>
                         </div>
+
                         <div id="mydiv1" style={{left: screens.length * 147 - 11, top: 26.5}}>
                             <div id="mydiv1header">
                                 <div style={{
@@ -766,11 +723,9 @@ function App() {
                             </div>
                         </div>
 
-
                         <div style={{width: 0}}>
                             <div id="polzunok" style={{left: 0, top: 0}}></div>
                         </div>
-
 
                     </div>
                 </div>
