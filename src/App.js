@@ -2,8 +2,9 @@ import React, {useEffect, useRef, useState} from 'react'
 import './App.css';
 import './styles/editor.css'
 import './styles/style.css'
+import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
-function App() {
+function Hello() {
 
     ///////////отправить на бэк
     const [timeSegments, setTimeSegments] = useState([[], []])
@@ -29,6 +30,8 @@ function App() {
 
     const [selectSingle, setSelectSingle] = useState(false)
     const [selectSingle2, setSelectSingle2] = useState(false)
+
+    const [addActive, setAddActive] = useState(false)
 
     // Кнопка звук
     const soundBtn = () => {
@@ -116,6 +119,10 @@ function App() {
     const selectSingle_labels2 = (e) => {
         setSelectSingle2(false)
         document.querySelector('.__select__title2').textContent = e.target.textContent
+    }
+
+    const addContent = () => {
+        setAddActive(s => !s)
     }
 
     useEffect(() => {
@@ -219,13 +226,12 @@ function App() {
 
             let shag = 0
 
-            if(elmnt.id === '2mydiv1' && videos.length === 2)
-                shag = (elmnt.offsetLeft - pos1 < screens.length * 147 + 29 ? (elmnt.offsetLeft - pos1 > Number(document.getElementById(`1mydiv0`).style.left.split("px")[0]) + 61.9 ? (elmnt.offsetLeft - pos1) : Number(document.getElementById(`1mydiv0`).style.left.split("px")[0]) + 61.9) : screens.length * 147 + 29)
-            else if(elmnt.id === '1mydiv0' && videos.length === 2) {
-                shag = (elmnt.offsetLeft - pos1 < Number(document.getElementById(`2mydiv1`).style.left.split("px")[0]) + 18 ? (elmnt.offsetLeft - pos1 > 51 ? (elmnt.offsetLeft - pos1) : 51) : Number(document.getElementById(`2mydiv1`).style.left.split("px")[0]) + 18)
-            }
-            else
-                shag =  (elmnt.offsetLeft - pos1 < screens.length * 147 + 29 ? (elmnt.offsetLeft - pos1 > 51 ? (elmnt.offsetLeft - pos1) : 51) : screens.length * 147 + 29)
+            if (elmnt.id === '2mydiv1' && videos.length === 2)
+                shag = (elmnt.offsetLeft - pos1 < screens.length * 147 + 29 ? (elmnt.offsetLeft - pos1 > Number(document.getElementById(`1mydiv0`).style.left.split("px")[0]) + 61.8 ? (elmnt.offsetLeft - pos1) : Number(document.getElementById(`1mydiv0`).style.left.split("px")[0]) + 61.8) : screens.length * 147 + 29)
+            else if (elmnt.id === '1mydiv0' && videos.length === 2) {
+                shag = (elmnt.offsetLeft - pos1 < Number(document.getElementById(`2mydiv1`).style.left.split("px")[0]) + 18.1 ? (elmnt.offsetLeft - pos1 > 51 ? (elmnt.offsetLeft - pos1) : 51) : Number(document.getElementById(`2mydiv1`).style.left.split("px")[0]) + 18.1)
+            } else
+                shag = (elmnt.offsetLeft - pos1 < screens.length * 147 + 29 ? (elmnt.offsetLeft - pos1 > 51 ? (elmnt.offsetLeft - pos1) : 51) : screens.length * 147 + 29)
 
 
             if (elmnt.id === `2mydiv${index}`) {
@@ -398,7 +404,7 @@ function App() {
 
 
     const cut = () => {
-        if (videos.length == 1) {
+        if (videos.length === 1) {
             setVideos(Array(2).fill(0))
             let ts = timeSegments
             ts = [
@@ -424,14 +430,16 @@ function App() {
             </header>
             <main>
                 <section className="main">
-                    <div className="container">
+                    <div style={{width}}>
                         <div className="video">
                             <div className="video__left_panel">
-                                <div className="video__left_panel__mixer" style={{display: soundBlock ? '' : 'none'}}>
+                                <div className="video__left_panel__mixer"
+                                     style={{opacity: soundBlock ? '1' : '0', pointerEvents: soundBlock ? '' : 'none'}}>
                                     <input type="range" min={0} max={100} step={1} onInput={color}
                                            className="video__left_panel__mixer__range"/>
                                 </div>
-                                <button className="video__left_panel__sound" onClick={() => soundBtn()} data-title='звук'>
+                                <button className="video__left_panel__sound" onClick={soundBtn}
+                                        data-title={soundBlock ? null : 'звук'}>
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -453,7 +461,8 @@ function App() {
                                             fill="black"/>
                                     </svg>
                                 </button>
-                                <button className="video__left_panel__delete" onClick={deleteVideo} data-title='удалить'>
+                                <button className="video__left_panel__delete" onClick={deleteVideo}
+                                        data-title='удалить'>
                                     <svg width="18" height="20" viewBox="0 0 18 20" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -521,7 +530,8 @@ function App() {
                                     <input type="range" min="0" max="100" step="1" value="100"
                                            className="video__right_panel__mixer__range"/>
                                 </div>
-                                <button className="video__right_panel__sound" onClick={opaccityBtn} data-title='прозрачность'>
+                                <button className="video__right_panel__sound" onClick={opaccityBtn}
+                                        data-title={opaccityBlock ? null : 'прозрачность'}>
                                     <svg width="19" height="19" viewBox="0 0 19 19" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -532,7 +542,8 @@ function App() {
                                             fill="#646464"/>
                                     </svg>
                                 </button>
-                                <button className="video__right_panel__cut" onClick={textBtn} data-title='текст'>
+                                <button className="video__right_panel__cut" onClick={textBtn}
+                                        data-title={textEditor ? null : 'текст'}>
                                     <svg width="23" height="23" viewBox="0 0 23 23" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -540,7 +551,8 @@ function App() {
                                             fill="#646464"/>
                                     </svg>
                                 </button>
-                                <button className="video__right_panel__delete" onClick={sizeBtn} data-title='размер холста'>
+                                <button className="video__right_panel__delete" onClick={sizeBtn}
+                                        data-title={sizeBlock ? null : 'размер холста'}>
                                     <svg width="23" height="23" viewBox="0 0 23 23" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -708,7 +720,7 @@ function App() {
 
                                 </div>
                             </div>
-                            <div className="save">
+                            <div className="save" style={{top: 20}}>
                                 <button className="save_btn" onClick={saveBtn}>Сохранить</button>
                                 <div className="save__block" style={{display: saveBlock ? '' : 'none'}}>
                                     <h4 className="save__block_h">Выберите качество</h4>
@@ -750,117 +762,126 @@ function App() {
                 </section>
 
                 <div style={{display: 'flex'}}>
-                <div style={{marginTop: 92}}>
+                    <div style={{marginTop: 70}}>
 
 
-                    <div id="scroller" style={{
-                        height: 140,
-                        width: width - 220,
-                        overflowY: 'hidden',
-                        display: 'flex',
-                        padding: '0 20px',
-                        margin: '0 20px',
-                    }}>
-                        <div style={{width: 0}}>
-                            <div style={{position: 'relative', width: screens.length * 147 + 20, top: 10, height: 83}}>
-                                <div
-                                    style={{width: screens.length * 147, height: 83, backgroundColor: '#707070'}}></div>
+                        <div id="scroller" style={{
+                            height: 140,
+                            width: width - 220,
+                            overflowY: 'hidden',
+                            display: 'flex',
+                            padding: '0 20px',
+                            margin: '0 20px',
+                        }}>
+                            <div style={{width: 0}}>
+                                <div style={{
+                                    position: 'relative',
+                                    width: screens.length * 147 + 20,
+                                    top: 10,
+                                    height: 83
+                                }}>
+                                    <div
+                                        style={{
+                                            width: screens.length * 147,
+                                            height: 83,
+                                            backgroundColor: '#707070'
+                                        }}></div>
+                                </div>
                             </div>
-                        </div>
 
 
-                        {
-                            videos.map((item, index) => {
+                            {
+                                videos.map((item, index) => {
 
-                                return (
-                                    <>
-                                        <div style={{width: 0}}>
-                                            <div id={`screens${index}`} style={{
-                                                display: 'flex',
-                                                position: 'relative',
-                                                width: screens.length * 147,
-                                                height: 83,
-                                                overflow: 'hidden',
-                                                top: 10,
-                                                borderRadius: 9
-                                            }}>
-
-                                                <div id={`screens2${index}`} style={{
+                                    return (
+                                        <>
+                                            <div style={{width: 0}}>
+                                                <div id={`screens${index}`} style={{
                                                     display: 'flex',
                                                     position: 'relative',
                                                     width: screens.length * 147,
                                                     height: 83,
+                                                    overflow: 'hidden',
+                                                    top: 10,
+                                                    borderRadius: 9
                                                 }}>
-                                                    {
-                                                        screens.map((item, ix) => {
-                                                            return (
-                                                                <video id={`${index}screen${ix}`} width="147"
-                                                                       height="83"
-                                                                       style={{position: 'relative'}}>
-                                                                    <source src={require('./vid.mp4')}
-                                                                            type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/>
-                                                                </video>
-                                                            )
-                                                        })
-                                                    }
+
+                                                    <div id={`screens2${index}`} style={{
+                                                        display: 'flex',
+                                                        position: 'relative',
+                                                        width: screens.length * 147,
+                                                        height: 83,
+                                                    }}>
+                                                        {
+                                                            screens.map((item, ix) => {
+                                                                return (
+                                                                    <video id={`${index}screen${ix}`} width="147"
+                                                                           height="83"
+                                                                           style={{position: 'relative'}}>
+                                                                        <source src={require('./vid.mp4')}
+                                                                                type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/>
+                                                                    </video>
+                                                                )
+                                                            })
+                                                        }
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div id={`kontur${index}`} className="kontur" style={{left: 0, top: 10}}>
-                                            <div id={`konturheader${index}`} className="konturheader" style={{
-                                                height: 77,
-                                                width: screens.length * 147 - 6,
-                                                borderRadius: 9,
-                                                border: '3px solid #31BE00',
-                                            }}></div>
-                                        </div>
-
-                                        <div id={`1mydiv${index}`} className="mydiv1"
-                                             style={{left: screens.length * 147 - 11, top: 26.5}}>
-                                            <div id={`1mydiv${index}header`} className="mydiv1header">
-                                                <div style={{
-                                                    cursor: 'ew-resize',
-                                                    height: 83,
-                                                    width: 20,
-                                                    transform: 'translateX(-50%)',
-                                                    position: 'relative',
-                                                    top: -18.5,
+                                            <div id={`kontur${index}`} className="kontur" style={{left: 0, top: 10}}>
+                                                <div id={`konturheader${index}`} className="konturheader" style={{
+                                                    height: 77,
+                                                    width: screens.length * 147 - 6,
+                                                    borderRadius: 9,
+                                                    border: '3px solid #31BE00',
                                                 }}></div>
                                             </div>
-                                        </div>
-                                        <div id={`2mydiv${index}`} className="mydiv2" style={{left: 11, top: 26.5}}>
-                                            <div id={`2mydiv${index}header`} className="mydiv2header">
-                                                <div style={{
-                                                    cursor: 'ew-resize',
-                                                    height: 83,
-                                                    width: 20,
-                                                    transform: 'translateX(-50%)',
-                                                    position: 'relative',
-                                                    top: -18.5
-                                                }}>
+
+                                            <div id={`1mydiv${index}`} className="mydiv1"
+                                                 style={{left: screens.length * 147 - 11, top: 26.5}}>
+                                                <div id={`1mydiv${index}header`} className="mydiv1header">
+                                                    <div style={{
+                                                        cursor: 'ew-resize',
+                                                        height: 83,
+                                                        width: 20,
+                                                        transform: 'translateX(-50%)',
+                                                        position: 'relative',
+                                                        top: -18.5,
+                                                    }}></div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </>
-                                )
-                            })
-                        }
+                                            <div id={`2mydiv${index}`} className="mydiv2" style={{left: 11, top: 26.5}}>
+                                                <div id={`2mydiv${index}header`} className="mydiv2header">
+                                                    <div style={{
+                                                        cursor: 'ew-resize',
+                                                        height: 83,
+                                                        width: 20,
+                                                        transform: 'translateX(-50%)',
+                                                        position: 'relative',
+                                                        top: -18.5
+                                                    }}>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )
+                                })
+                            }
 
 
-                        <div style={{width: 0}}>
-                            <div id="polzunok" style={{left: 0, top: 0}}></div>
+                            <div style={{width: 0}}>
+                                <div id="polzunok" style={{left: 0, top: 0}}></div>
+                            </div>
+
                         </div>
-
                     </div>
-                </div>
 
-                    <section className="road_section" style={{position: 'relative', top: 92}}>
+                    <section className="road_section" style={{position: 'relative', top: 70}}>
                         <div className="road">
 
                             <div className="road__btn">
                                 <div className="road__btn__back">
-                                    <button className="road__btn__inside">
+                                    <button className="road__btn__inside" onClick={addContent}>
                                         <svg width="37" height="38" viewBox="0 0 37 38" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
                                             <path d="M1.75879 18.9769H35.1496" stroke="black" stroke-width="2"
@@ -869,7 +890,7 @@ function App() {
                                                   stroke-linecap="round"/>
                                         </svg>
                                     </button>
-                                    <div className="road__btn__block">
+                                    <div className="road__btn__block" style={{display: addActive ? '' : 'none'}}>
                                         <div className="road__btn__block__video">
                                             <svg width="19" height="19" viewBox="0 0 19 19" fill="none"
                                                  xmlns="http://www.w3.org/2000/svg">
@@ -924,7 +945,7 @@ function App() {
             </main>
             <footer>
                 <section className="footer">
-                    <div className="container">
+                    <div style={{width}}>
                         <p className="footer__description">© KomandniyDuh, 2022</p>
                     </div>
                 </section>
@@ -933,4 +954,71 @@ function App() {
     );
 }
 
-export default App;
+function G() {
+    const [width, setWidth] = useState(window.innerWidth)
+    window.addEventListener('resize', () => {
+        setWidth(window.innerWidth)
+    })
+    return (
+        <div>
+            <header>
+                <section className="header">
+                    <div className="container">
+
+                    </div>
+                </section>
+            </header>
+            <main>
+                <section className="open-file" style={{overflow: 'hidden'}}>
+                    <div style={{width: width - 8, display: 'flex'}}>
+                        <div style={{margin: 'auto'}}>
+                        <h1 className="open-file__head" style={{color: 'white'}}>Легкий и простой редактор записей вебинаров</h1>
+                        <div id="drop-area">
+                            <form className="my-form">
+                                <label className="button" for="fileElem">Открыть файл</label>
+                                <div className="description">
+                                    <div className="description__img" style={{position: 'relative', top: 4}}>
+                                        <svg width="23" height="23" viewBox="0 0 23 23" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M11.5 15.3334L15.3333 10.5417H12.4583V3.83337H10.5416V10.5417H7.66663L11.5 15.3334Z"
+                                                fill="white"/>
+                                            <path
+                                                d="M19.1666 17.25H3.83329V10.5416H1.91663V17.25C1.91663 18.307 2.77625 19.1666 3.83329 19.1666H19.1666C20.2237 19.1666 21.0833 18.307 21.0833 17.25V10.5416H19.1666V17.25Z"
+                                                fill="white"/>
+                                        </svg>
+                                    </div>
+                                    <p className="description__p">Или перетащите файл сюда</p>
+                                </div>
+                                <input type="file" id="fileElem" multiple accept="video/*"
+                                       onChange="handleFiles(this.files)"/>
+                            </form>
+                        </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+            <footer>
+                <section className="footer">
+                    <div style={{width: width - 8, display: 'flex'}}>
+                        <div style={{margin: 'auto'}}>
+                            <p className="footer__description">© KomandniyDuh, 2022</p>
+                            <Link to="/video-editor">След страница</Link>
+                        </div>
+                    </div>
+                </section>
+            </footer>
+        </div>
+    )
+}
+
+export default function App() {
+    return (
+        <Router>
+            <Switch>
+                <Route exact path="/"><G/></Route>
+                <Route path="/video-editor"><Hello/></Route>
+            </Switch>
+        </Router>
+    );
+}

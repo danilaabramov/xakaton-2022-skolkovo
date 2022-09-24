@@ -14,7 +14,7 @@ body {
 }
 
 .open-file__head {
-  margin: 56px auto;
+
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
@@ -79,7 +79,7 @@ body {
   background: #727272;
 }
 .footer__description {
-  margin: 0;
+  margin: 0 auto;
   padding: 20px;
   font-family: 'Inter';
   font-style: normal;

@@ -36,7 +36,7 @@ main {
 }
 
 .video {
-    padding: 40px auto;
+    padding: 40px 0 0;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -46,6 +46,7 @@ main {
     -webkit-box-align: end;
     -ms-flex-align: end;
     align-items: flex-end;
+    margin: auto;
 }
 .video__left_panel {
     margin: 0 25px 65px 0;
