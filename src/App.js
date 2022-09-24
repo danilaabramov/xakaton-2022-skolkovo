@@ -1,11 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react'
-import Client from './Client.js'
 import './App.css';
 import './styles/editor.css'
 import './styles/style.css'
-
-let client = new Client()
-client.Ping()
 
 function App() {
 
@@ -13,7 +9,7 @@ function App() {
 
     const [width, setWidth] = useState(window.innerWidth)
     const [screens, setScreens] = useState(Array(10).fill(0))
-    const [videos, setVideos] = useState(Array(2).fill(0))
+    const [videos, setVideos] = useState(Array(1).fill(0))
 
     const [play, setPlay] = useState(false)
 
@@ -168,7 +164,7 @@ function App() {
                 });
             }
         }
-    }, [])
+    }, [videos])
 
 
     function dragElement(elmnt) {
@@ -334,6 +330,53 @@ function App() {
     }
 
 
+    useEffect(() => {
+        if (videos.length > 1) {
+            let polz = document.getElementById(`polzunok`)
+
+            let kon0 = document.getElementById(`kontur${0}`)
+            let konh0 = document.getElementById(`konturheader${0}`)
+            let scree0 = document.getElementById(`screens${0}`)
+            let scree20 = document.getElementById(`screens2${0}`)
+            let el0 = document.getElementById(`1mydiv${0}`)
+            let el20 = document.getElementById(`2mydiv${0}`)
+
+            let kon1 = document.getElementById(`kontur${1}`)
+            let konh1 = document.getElementById(`konturheader${1}`)
+            let scree1 = document.getElementById(`screens${1}`)
+            let scree21 = document.getElementById(`screens2${1}`)
+            let el1 = document.getElementById(`1mydiv${1}`)
+            let el21 = document.getElementById(`2mydiv${1}`)
+
+
+            konh0.style.width = Number(konh0.style.width.split('px')[0]) / 2 - 3 + 'px';
+            konh1.style.width = konh0.style.width
+
+            kon1.style.left = Number(konh0.style.width.split('px')[0]) + 6 + 'px';
+
+            scree0.style.width = Number(scree0.style.width.split('px')[0]) / 2 + 'px';
+            scree1.style.width = scree0.style.width
+
+            scree1.style.left = Number(scree0.style.width.split('px')[0]) + 'px';
+
+            scree21.style.left = - Number(konh0.style.width.split('px')[0]) - 6 + 'px';
+
+
+            el0.style.left = Number(scree0.style.width.split('px')[0]) - 12.5 + 'px';
+
+            el21.style.left = Number(scree0.style.width.split('px')[0]) + 12.5 + 'px';
+
+            // scree20.style.width = Number(scree20.style.width.split('px')[0]) / 2 + 'px';
+            // scree21.style.width = Number(scree21.style.width.split('px')[0]) / 2 + 'px';
+        }
+    }, [videos])
+
+
+    const cut = () => {
+        setVideos(Array(2).fill(0))
+        // cut2()
+    }
+
     return (
         <div className="App">
             <header>
@@ -362,7 +405,7 @@ function App() {
                                             fill="black"/>
                                     </svg>
                                 </button>
-                                <button className="video__left_panel__cut">
+                                <button className="video__left_panel__cut" onClick={cut}>
                                     <svg width="19" height="20" viewBox="0 0 19 20" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -387,8 +430,8 @@ function App() {
                             </div>
                             <div className="video__center">
                                 <div className="video__show">
-                                    <video className="video__show__clip" ref={vid} id="my-video" width="640"
-                                           height="360">
+                                    <video className="video__show__clip" ref={vid} id="my-video" width="720"
+                                           height="405">
                                         <source src={require('./vid.mp4')} type='video/mp4'/>
                                     </video>
                                 </div>
@@ -486,26 +529,45 @@ function App() {
                                                      data-default="Open Sans">Open Sans
                                                 </div>
                                                 <div className="__select__content">
-                                                    <input id="singleSelect0" className="__select__input" type="radio"
+                                                    <input id="singleSelect10" className="__select__input" type="radio"
                                                            name="singleSelect" checked/>
+                                                    <label htmlFor="singleSelect10" className="__select__label"
+                                                           onClick={selectSingle_labels}>Open Sans</label>
+                                                    <input id="singleSelect0" className="__select__input" type="radio"
+                                                           name="singleSelect"/>
                                                     <label htmlFor="singleSelect0" className="__select__label"
-                                                           onClick={selectSingle_labels}>Option
-                                                        0</label>
+                                                           onClick={selectSingle_labels}>Open Sans
+                                                    </label>
                                                     <input id="singleSelect1" className="__select__input" type="radio"
                                                            name="singleSelect"/>
                                                     <label htmlFor="singleSelect1" className="__select__label"
-                                                           onClick={selectSingle_labels}>Option
-                                                        1</label>
+                                                           onClick={selectSingle_labels}>Noto Serif
+                                                        </label>
                                                     <input id="singleSelect3" className="__select__input" type="radio"
                                                            name="singleSelect"/>
                                                     <label htmlFor="singleSelect3" className="__select__label"
-                                                           onClick={selectSingle_labels}>Option
-                                                        3</label>
+                                                           onClick={selectSingle_labels}>EB Garamond
+                                                        </label>
                                                     <input id="singleSelect4" className="__select__input" type="radio"
                                                            name="singleSelect"/>
                                                     <label htmlFor="singleSelect4" className="__select__label"
-                                                           onClick={selectSingle_labels}>Option
-                                                        4</label>
+                                                           onClick={selectSingle_labels}>Kalam
+                                                        </label>
+                                                    <input id="singleSelect5" className="__select__input" type="radio"
+                                                           name="singleSelect"/>
+                                                    <label htmlFor="singleSelect5" className="__select__label"
+                                                           onClick={selectSingle_labels}>Space Mono
+                                                        </label>
+                                                    <input id="singleSelect6" className="__select__input" type="radio"
+                                                           name="singleSelect"/>
+                                                    <label htmlFor="singleSelect6" className="__select__label"
+                                                           onClick={selectSingle_labels}>Cookie
+                                                        </label>
+                                                    <input id="singleSelect7" className="__select__input" type="radio"
+                                                           name="singleSelect"/>
+                                                    <label htmlFor="singleSelect7" className="__select__label"
+                                                           onClick={selectSingle_labels}>Montserrat
+                                                    </label>
                                                 </div>
                                             </div>
                                         </form>
@@ -516,6 +578,12 @@ function App() {
                                                          data-default="Open Sans">32
                                                     </div>
                                                     <div className="__select__content2">
+                                                        <input id="singleSelect10" className="__select__input2"
+                                                               type="radio"
+                                                               name="singleSelect" checked/>
+                                                        <label htmlFor="singleSelect10"
+                                                               className="__select__label2"
+                                                               onClick={selectSingle_labels2}>14</label>
                                                         <input id="singleSelect0" className="__select__input2"
                                                                type="radio"
                                                                name="singleSelect" checked/>
@@ -655,7 +723,7 @@ function App() {
                     }}>
                         <div style={{width: 0}}>
                             <div style={{position: 'relative', width: screens.length * 147 + 20, top: 10, height: 83}}>
-                                <div style={{width: screens.length * 147, height: 83, backgroundColor: 'white'}}></div>
+                                <div style={{width: screens.length * 147, height: 83, backgroundColor: '#707070'}}></div>
                             </div>
                         </div>
 
