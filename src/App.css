@@ -51,14 +51,14 @@ img {
 }
 
 
-#mydiv1, #mydiv2 {
+.mydiv1, .mydiv2 {
   position: relative;
   z-index: 1000;
   width: 0;
   cursor: ew-resize;
 }
 
-#mydiv1header, #mydiv2header {
+.mydiv1header, .mydiv2header {
   cursor: ew-resize;
   padding: 1px;
   width: 1px;
@@ -81,11 +81,7 @@ img {
   cursor: pointer;
 }
 
-#kontur {
+.kontur {
   position: relative;
   width: 0;
-}
-
-.end {
-  pointer-events: none;
 }
