@@ -22,6 +22,8 @@ function App() {
     const [duration, setDuration] = useState(0)
     const [currentTime, setCurrenTime] = useState(0)
 
+    const [selectSingle, setSelectSingle] = useState(false)
+    const [selectSingle2, setSelectSingle2] = useState(false)
 
     // Кнопка звук
     const soundBtn = () => {
@@ -87,6 +89,30 @@ function App() {
         setFormatBlock(false)
     }
 
+    // Toggle menu
+    const selectSingle_title = () => {
+        setSelectSingle(s => !s)
+        setSelectSingle2(false)
+    }
+
+    // Close when click to option
+    const selectSingle_labels = (e) => {
+        setSelectSingle(false)
+        document.querySelector('.__select__title').textContent = e.target.textContent
+    }
+
+    // Toggle menu
+    const selectSingle_title2 = () => {
+        setSelectSingle2(s => !s)
+        setSelectSingle(false)
+    }
+
+    // Close when click to option
+    const selectSingle_labels2 = (e) => {
+        setSelectSingle2(false)
+        document.querySelector('.__select__title2').textContent = e.target.textContent
+    }
+
     useEffect(() => {
         let videoTrack = document.querySelector('.video-track'),
             time = document.querySelector('.timeLine');
@@ -113,7 +139,6 @@ function App() {
                 document.getElementById(`polzunok`).style.left = (document.getElementById(`my-video`).currentTime / document.getElementById(`my-video`).duration * (screens.length * 147)) + "px"
             }, 10)
 
-
             document.getElementById(`my-video`).addEventListener('pause', () => {
                 clearInterval(inter)
             })
@@ -127,57 +152,13 @@ function App() {
             setWidth(window.innerWidth)
         })
 
-
         for (let j = 0; j < screens.length; ++j) {
             document.getElementById(`screen${j}`).addEventListener('loadeddata', function () {
                 setDuration(vid.current.duration)
                 document.getElementById(`screen${j}`).currentTime = document.getElementById(`screen${j}`).duration / screens.length / 2 + j * document.getElementById(`screen${j}`).duration / screens.length;
             });
         }
-
-        const selectSingle = document.querySelector('.__select');
-        const selectSingle_title = selectSingle.querySelector('.__select__title');
-        const selectSingle_labels = selectSingle.querySelectorAll('.__select__label');
-
-// Toggle menu
-        selectSingle_title.addEventListener('click', () => {
-            if ('active' === selectSingle.getAttribute('data-state')) {
-                selectSingle.setAttribute('data-state', '');
-            } else {
-                selectSingle.setAttribute('data-state', 'active');
-            }
-        });
-
-// Close when click to option
-        for (let i = 0; i < selectSingle_labels.length; i++) {
-            selectSingle_labels[i].addEventListener('click', (evt) => {
-                selectSingle_title.textContent = evt.target.textContent;
-                selectSingle.setAttribute('data-state', '');
-            });
-        }
-
-
-        const selectSingle2 = document.querySelector('.__select2');
-        const selectSingle_title2 = selectSingle2.querySelector('.__select__title2');
-        const selectSingle_labels2 = selectSingle2.querySelectorAll('.__select__label2');
-
-// Toggle menu
-        selectSingle_title2.addEventListener('click', () => {
-            if ('active' === selectSingle2.getAttribute('data-state')) {
-                selectSingle2.setAttribute('data-state', '');
-            } else {
-                selectSingle2.setAttribute('data-state', 'active');
-            }
-        });
-
-// Close when click to option
-        for (let i = 0; i < selectSingle_labels2.length; i++) {
-            selectSingle_labels2[i].addEventListener('click', (evt) => {
-                selectSingle_title2.textContent = evt.target.textContent;
-                selectSingle2.setAttribute('data-state', '');
-            });
-        }
-    }, [])
+ }, [])
 
 
     function dragElement(elmnt) {
@@ -227,7 +208,6 @@ function App() {
 
             let shag = (elmnt.offsetLeft - pos1 < screens.length * 147 + 30 ? (elmnt.offsetLeft - pos1 > 50 ? (elmnt.offsetLeft - pos1) : 50) : screens.length * 147 + 30)
 
-
             if (elmnt.id === 'mydiv2') {
                 let elleft = Number(document.getElementById(`mydiv${Number(elmnt.id[5]) - 1}`).style.left.split("px")[0])
 
@@ -235,7 +215,6 @@ function App() {
 
                 let sdvig = (elleft > shag - 40 ? shag - 40 : elleft)
                 elmnt.style.left = sdvig + "px";
-
 
                 if (elleft > shag - 40) {
                     polz.style.left = shag - 51 + "px";
@@ -283,8 +262,6 @@ function App() {
 
                 }
             }
-
-
         }
 
         function closeDragElement() {
@@ -351,7 +328,6 @@ function App() {
             document.querySelector('.video__left_panel__mixer__range').style.background = `-moz-linear-gradient(left, #000 0%, #000 ${val}%, $grey ${val}%, $grey 100%) !important`
             console.log(val)
         });
-
     }
 
 
@@ -360,7 +336,6 @@ function App() {
             <header>
                 <section className="header">
                     <div className="container">
-
                     </div>
                 </section>
             </header>
@@ -503,54 +478,54 @@ function App() {
                                     <div className="text-editor__block__font">
                                         <h3 className="text-editor__block__font__h">Шрифт</h3>
                                         <form>
-                                            <div className="__select" data-state="">
-                                                <div className="__select__title" data-default="Open Sans">Open Sans
+                                            <div className='__select' data-state={selectSingle ? 'active' : ''}>
+                                                <div onClick={selectSingle_title} className="__select__title" data-default="Open Sans">Open Sans
                                                 </div>
                                                 <div className="__select__content">
                                                     <input id="singleSelect0" className="__select__input" type="radio"
                                                            name="singleSelect" checked/>
-                                                    <label htmlFor="singleSelect0" className="__select__label">Option
+                                                    <label htmlFor="singleSelect0" className="__select__label" onClick={selectSingle_labels}>Option
                                                         0</label>
                                                     <input id="singleSelect1" className="__select__input" type="radio"
                                                            name="singleSelect"/>
-                                                    <label htmlFor="singleSelect1" className="__select__label">Option
+                                                    <label htmlFor="singleSelect1" className="__select__label" onClick={selectSingle_labels}>Option
                                                         1</label>
                                                     <input id="singleSelect3" className="__select__input" type="radio"
                                                            name="singleSelect"/>
-                                                    <label htmlFor="singleSelect3" className="__select__label">Option
+                                                    <label htmlFor="singleSelect3" className="__select__label" onClick={selectSingle_labels}>Option
                                                         3</label>
                                                     <input id="singleSelect4" className="__select__input" type="radio"
                                                            name="singleSelect"/>
-                                                    <label htmlFor="singleSelect4" className="__select__label">Option
+                                                    <label htmlFor="singleSelect4" className="__select__label" onClick={selectSingle_labels}>Option
                                                         4</label>
                                                 </div>
                                             </div>
                                         </form>
                                         <div className="text-editor__block__font__etc">
                                             <form>
-                                                <div className="__select2" data-state="">
-                                                    <div className="__select__title2" data-default="Open Sans">32</div>
+                                                <div className="__select2" data-state={selectSingle2 ? 'active' : ''}>
+                                                    <div onClick={selectSingle_title2} className="__select__title2" data-default="Open Sans">32</div>
                                                     <div className="__select__content2">
                                                         <input id="singleSelect0" className="__select__input2"
                                                                type="radio"
                                                                name="singleSelect" checked/>
                                                         <label htmlFor="singleSelect0"
-                                                               className="__select__label2">14</label>
+                                                               className="__select__label2"  onClick={selectSingle_labels2}>14</label>
                                                         <input id="singleSelect1" className="__select__input2"
                                                                type="radio"
                                                                name="singleSelect"/>
                                                         <label htmlFor="singleSelect1"
-                                                               className="__select__label2">18</label>
+                                                               className="__select__label2"  onClick={selectSingle_labels2}>18</label>
                                                         <input id="singleSelect3" className="__select__input2"
                                                                type="radio"
                                                                name="singleSelect"/>
                                                         <label htmlFor="singleSelect3"
-                                                               className="__select__label2">24</label>
+                                                               className="__select__label2"  onClick={selectSingle_labels2}>24</label>
                                                         <input id="singleSelect4" className="__select__input2"
                                                                type="radio"
                                                                name="singleSelect"/>
                                                         <label htmlFor="singleSelect4"
-                                                               className="__select__label2">32</label>
+                                                               className="__select__label2"  onClick={selectSingle_labels2}>32</label>
                                                     </div>
                                                 </div>
                                             </form>
