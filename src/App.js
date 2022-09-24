@@ -1,7 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react'
+import Client from './Client.js'
 import './App.css';
 import './styles/editor.css'
 import './styles/style.css'
+
+let client = new Client()
+client.Ping()
 
 function App() {
 
