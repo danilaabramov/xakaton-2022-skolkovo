@@ -4,7 +4,7 @@ import './styles/editor.css'
 import './styles/style.css'
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
-function Hello() {
+function VideoEditor() {
 
     ///////////отправить на бэк
     const [timeSegments, setTimeSegments] = useState([[], []])
@@ -954,7 +954,7 @@ function Hello() {
     );
 }
 
-function G() {
+function Main() {
     const [width, setWidth] = useState(window.innerWidth)
     window.addEventListener('resize', () => {
         setWidth(window.innerWidth)
@@ -1016,8 +1016,8 @@ export default function App() {
     return (
         <Router>
             <Switch>
-                <Route exact path="/"><G/></Route>
-                <Route path="/video-editor"><Hello/></Route>
+                <Route exact path="/"><Main/></Route>
+                <Route path="/video-editor"><VideoEditor/></Route>
             </Switch>
         </Router>
     );
