@@ -9,6 +9,7 @@ function App() {
 
     const [width, setWidth] = useState(window.innerWidth)
     const [screens, setScreens] = useState(Array(10).fill(0))
+    const [videos, setVideos] = useState(Array(2).fill(0))
 
     const [play, setPlay] = useState(false)
 
@@ -127,13 +128,11 @@ function App() {
             vid.current.pause()
         });
 
-        dragElement(document.getElementById("2mydiv0"));
-        dragElement(document.getElementById("1mydiv0"));
-        dragElement(document.getElementById("2mydiv1"));
-        dragElement(document.getElementById("1mydiv1"));
-
-        dragElement2(document.getElementById("kontur0"))
-        dragElement2(document.getElementById("kontur1"))
+        for (let i = 0; i < videos.length; ++i) {
+            dragElement(document.getElementById(`2mydiv${i}`));
+            dragElement(document.getElementById(`1mydiv${i}`));
+            dragElement2(document.getElementById(`kontur${i}`))
+        }
 
         dragElement2(document.getElementById("polzunok"))
 
@@ -157,7 +156,7 @@ function App() {
             setWidth(window.innerWidth)
         })
 
-        for (let i = 0; i < 2; ++i) {
+        for (let i = 0; i < videos.length; ++i) {
             for (let j = 0; j < screens.length; ++j) {
                 document.getElementById(`${i}screen${j}`).addEventListener('loadeddata', function () {
                     setDuration(vid.current.duration)
@@ -658,7 +657,7 @@ function App() {
 
 
                         {
-                            [0, 0].map((item, index) => {
+                            videos.map((item, index) => {
 
                                 return (
                                     <>
