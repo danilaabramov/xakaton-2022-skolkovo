@@ -164,7 +164,7 @@ main {
     background-color: #000;
 }
 .video__show__clip {
-    height: 340px;
+
 }
 .video__show__clip__buttons {
     width: 100%;
@@ -1029,6 +1029,7 @@ button[data-title]:hover::after {
     -webkit-transition: all 0.2s ease 0.5s;
     transition: all 0.2s ease 0.5s;
     visibility: visible;
+    display: block;
 }
 
 button[data-title]::after {
@@ -1051,6 +1052,8 @@ button[data-title]::after {
     border: none;
     background-color: #9b9b9b;
     opacity: 0;
+    pointer-events: none;
+    display: none;
 }
 
 [data-title] {

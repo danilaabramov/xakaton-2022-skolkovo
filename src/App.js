@@ -163,14 +163,13 @@ function App() {
 
         document.getElementById(`my-video`).addEventListener('loadeddata', function () {
             setTimeSegments([[0, document.getElementById(`my-video`).duration]])
-            console.log([[0, document.getElementById(`my-video`).duration]])
+            console.log([[0, document.getElementById(`my-video`).duration], [document.getElementById(`my-video`).duration, document.getElementById(`my-video`).duration]])
         });
 
         for (let i = 0; i < videos.length; ++i) {
             for (let j = 0; j < screens.length; ++j) {
                 document.getElementById(`${i}screen${j}`).addEventListener('loadeddata', function () {
                     setDuration(vid.current.duration)
-
                     document.getElementById(`${i}screen${j}`).currentTime = document.getElementById(`${i}screen${j}`).duration / screens.length / 2 + j * document.getElementById(`${i}screen${j}`).duration / screens.length;
                 });
             }
@@ -210,7 +209,6 @@ function App() {
             pos3 = e.clientX;
             pos4 = e.clientY;
             // установите новое положение элемента:
-            // elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
             let index = Number(elmnt.id.split('mydiv')[1])
 
             let polz = document.getElementById(`polzunok`)
@@ -262,12 +260,9 @@ function App() {
 
                 if (elleft < shag - 40) {
                     polz.style.left = shag - 29 + "px";
-                    // end3.style.left = shag - 40 + "px";
-                    // end4.style.left = shag - 40 + "px";
 
                     video.currentTime = video.duration * (shag - 29) / (screens.length * 147)
                     setCurrenTime((document.getElementById(`my-video`).currentTime))
-
 
                     let ts = timeSegments
                     ts[index][1] = video.duration * (shag - 51) / (screens.length * 147)
@@ -278,11 +273,6 @@ function App() {
                     konh.style.width = shag - 35 - Number(kon.style.left.split("px")[0]) + "px";
 
                     scree.style.width = shag - 29 - Number(kon.style.left.split("px")[0]) + "px";
-                    //scree.style.left = Number(kon.style.left.split("px")[0]) + screens.length * 147 + "px";
-
-                    // wb2.style.left = (9 + Number(elmnt.style.left.split("px")[0])) + "px"
-                    // wb2.style.width = (screens.length * 147 - Number(konh.style.width.split("px")[0])) + "px";
-
                 }
             }
         }
@@ -328,7 +318,6 @@ function App() {
             pos3 = e.clientX;
             pos4 = e.clientY;
             // установите новое положение элемента:
-            // elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
             let polz = document.getElementById(`polzunok`)
             let scroll = document.getElementById('scroller').scrollLeft
 
