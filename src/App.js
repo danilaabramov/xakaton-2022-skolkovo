@@ -960,6 +960,26 @@ function Main() {
         setWidth(window.innerWidth)
     })
 
+    function handleDrop(e) {
+        let dt = e.dataTransfer
+        let files = dt.files
+        uploadFile(files[0])
+    }
+
+    function uploadFile(file) {
+        let url = '??????'
+        let formData = new FormData()
+        formData.append('file', file)
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+            .then(() => { /* Готово. Информируем пользователя */
+            })
+            .catch(() => { /* Ошибка. Информируем пользователя */
+            })
+    }
+
     useEffect(() => {
         let dropArea = document.getElementById('drop-area');
 
@@ -972,7 +992,6 @@ function Main() {
             e.stopPropagation()
         }
 
-
         ;['dragenter', 'dragover'].forEach(eventName => {
             dropArea.addEventListener(eventName, highlight, false)
         })
@@ -980,42 +999,15 @@ function Main() {
             dropArea.addEventListener(eventName, unhighlight, false)
         })
 
-        function highlight(e) {
+        function highlight() {
             dropArea.classList.add('highlight')
         }
 
-        function unhighlight(e) {
+        function unhighlight() {
             dropArea.classList.remove('highlight')
         }
 
-
         dropArea.addEventListener('drop', handleDrop, false)
-
-        function handleDrop(e) {
-            let dt = e.dataTransfer
-            let files = dt.files
-            handleFiles(files)
-        }
-
-
-        function handleFiles(files) {
-            ([...files]).forEach(uploadFile)
-        }
-
-
-        function uploadFile(file) {
-            let url = '??????'
-            let formData = new FormData()
-            formData.append('file', file)
-            fetch(url, {
-                method: 'POST',
-                body: formData
-            })
-                .then(() => { /* Готово. Информируем пользователя */
-                })
-                .catch(() => { /* Ошибка. Информируем пользователя */
-                })
-        }
 
     }, [])
 
@@ -1052,7 +1044,7 @@ function Main() {
                                         <p className="description__p">Или перетащите файл сюда</p>
                                     </div>
                                     <input type="file" id="fileElem" multiple accept="video/*"
-                                           onChange="handleFiles(this.files)"/>
+                                           onChange={(e) => uploadFile(e.target.files[0])}/>
                                 </form>
                             </div>
                         </div>
