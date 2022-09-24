@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react'
 import './App.css';
 import './styles/editor.css'
 import './styles/style.css'
-import {Routes, Route, Link} from "react-router-dom";
+import {useNavigate, Routes, Route, Link} from "react-router-dom";
 
 function VideoEditor() {
 
@@ -960,6 +960,8 @@ function Main() {
         setWidth(window.innerWidth)
     })
 
+    const navigate = useNavigate()
+
     function handleDrop(e) {
         let dt = e.dataTransfer
         let files = dt.files
@@ -967,17 +969,22 @@ function Main() {
     }
 
     function uploadFile(file) {
-        let url = '??????'
+        let url = 'Куда закинут видео?'
+        let URL = 'Откуда взять видео?'
         let formData = new FormData()
         formData.append('file', file)
         fetch(url, {
             method: 'POST',
             body: formData
         })
-            .then(() => { /* Готово. Информируем пользователя */
-            })
-            .catch(() => { /* Ошибка. Информируем пользователя */
-            })
+            .then(() => {})
+            .catch(() => {})
+
+        navigate('/video-editor', {
+            state: {
+                URL
+            },
+        })
     }
 
     useEffect(() => {
