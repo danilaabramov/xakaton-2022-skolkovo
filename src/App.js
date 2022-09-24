@@ -5,6 +5,10 @@ import './styles/style.css'
 
 function App() {
 
+    ///////////отправить на бэк
+    const [timeSegments, setTimeSegments] = useState([[], []])
+    ///////////
+
     const vid = useRef(null);
 
     const [width, setWidth] = useState(window.innerWidth)
@@ -136,6 +140,7 @@ function App() {
 
         dragElement2(document.getElementById("polzunok"))
 
+
         document.getElementById(`my-video`).addEventListener('play', () => {
 
             let inter = setInterval(() => {
@@ -156,15 +161,21 @@ function App() {
             setWidth(window.innerWidth)
         })
 
+        document.getElementById(`my-video`).addEventListener('loadeddata', function () {
+            setTimeSegments([[0, document.getElementById(`my-video`).duration]])
+            console.log([[0, document.getElementById(`my-video`).duration]])
+        });
+
         for (let i = 0; i < videos.length; ++i) {
             for (let j = 0; j < screens.length; ++j) {
                 document.getElementById(`${i}screen${j}`).addEventListener('loadeddata', function () {
                     setDuration(vid.current.duration)
+
                     document.getElementById(`${i}screen${j}`).currentTime = document.getElementById(`${i}screen${j}`).duration / screens.length / 2 + j * document.getElementById(`${i}screen${j}`).duration / screens.length;
                 });
             }
         }
-    }, [videos])
+    }, [videos, timeSegments])
 
 
     function dragElement(elmnt) {
@@ -224,6 +235,12 @@ function App() {
                     video.currentTime = video.duration * (shag - 51) / (screens.length * 147)
                     setCurrenTime((document.getElementById(`my-video`).currentTime))
 
+
+                    let ts = timeSegments
+                    ts[index][0] = video.duration * (shag - 51) / (screens.length * 147)
+                    console.log(ts)
+                    setTimeSegments(ts)
+
                     kon.style.left = shag - 51 + "px";
 
                     let w = Number(konh.style.width.split("px")[0] - razn)
@@ -250,6 +267,13 @@ function App() {
 
                     video.currentTime = video.duration * (shag - 29) / (screens.length * 147)
                     setCurrenTime((document.getElementById(`my-video`).currentTime))
+
+
+                    let ts = timeSegments
+                    ts[index][1] = video.duration * (shag - 51) / (screens.length * 147)
+                    console.log(ts)
+                    setTimeSegments(ts)
+
 
                     konh.style.width = shag - 35 - Number(kon.style.left.split("px")[0]) + "px";
 
@@ -359,10 +383,10 @@ function App() {
 
             scree1.style.left = Number(scree0.style.width.split('px')[0]) + Number(kon0.style.left.split('px')[0]) + 'px';
 
-            scree21.style.left = - Number(konh0.style.width.split('px')[0]) - 6 - Number(kon0.style.left.split('px')[0]) + 'px';
+            scree21.style.left = -Number(konh0.style.width.split('px')[0]) - 6 - Number(kon0.style.left.split('px')[0]) + 'px';
 
 
-            el21.style.left = Number(scree0.style.width.split('px')[0]) + 12.5  + Number(kon0.style.left.split('px')[0])+ 'px';
+            el21.style.left = Number(scree0.style.width.split('px')[0]) + 12.5 + Number(kon0.style.left.split('px')[0]) + 'px';
 
             el1.style.left = Number(el21.style.left.split('px')[0]) + Number(konh1.style.width.split('px')[0]) - 18.5 + 'px';
 
@@ -376,7 +400,16 @@ function App() {
 
 
     const cut = () => {
-        if (videos.length == 1) setVideos(Array(2).fill(0))
+        if (videos.length == 1) {
+            setVideos(Array(2).fill(0))
+            let ts = timeSegments
+            ts = [
+                [ts[0][0], (ts[0][1] + ts[0][0]) / 2],
+                [(ts[0][1] + ts[0][0]) / 2, ts[0][1]]
+            ]
+            console.log(ts)
+            setTimeSegments(ts)
+        }
     }
 
     return (
@@ -396,7 +429,7 @@ function App() {
                                     <input type="range" min={0} max={100} step={1} onInput={color}
                                            className="video__left_panel__mixer__range"/>
                                 </div>
-                                <button className="video__left_panel__sound" onClick={() => soundBtn()}>
+                                <button className="video__left_panel__sound" onClick={() => soundBtn()} data-title='звук'>
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -407,7 +440,7 @@ function App() {
                                             fill="black"/>
                                     </svg>
                                 </button>
-                                <button className="video__left_panel__cut" onClick={cut}>
+                                <button className="video__left_panel__cut" onClick={cut} data-title='разделить'>
                                     <svg width="19" height="20" viewBox="0 0 19 20" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -418,7 +451,7 @@ function App() {
                                             fill="black"/>
                                     </svg>
                                 </button>
-                                <button className="video__left_panel__delete">
+                                <button className="video__left_panel__delete" data-title='удалить'>
                                     <svg width="18" height="20" viewBox="0 0 18 20" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -444,7 +477,7 @@ function App() {
                                             <p>{currentTime.toFixed(2)} / {duration.toFixed(2)}</p>
                                         </div>
                                         <div className="video__show__clip__arrows">
-                                            <button className="video__show__clip__arrows__back">
+                                            <button className="video__show__clip__arrows__back" data-title='отменить'>
                                                 <svg width="23" height="23" viewBox="0 0 23 23" fill="none"
                                                      xmlns="http://www.w3.org/2000/svg">
                                                     <path
@@ -452,7 +485,7 @@ function App() {
                                                         fill="black"/>
                                                 </svg>
                                             </button>
-                                            <button className="video__show__clip__arrows__next">
+                                            <button className="video__show__clip__arrows__next" data-title='повторить'>
                                                 <svg width="23" height="23" viewBox="0 0 23 23" fill="none"
                                                      xmlns="http://www.w3.org/2000/svg">
                                                     <path
@@ -486,7 +519,7 @@ function App() {
                                     <input type="range" min="0" max="100" step="1" value="100"
                                            className="video__right_panel__mixer__range"/>
                                 </div>
-                                <button className="video__right_panel__sound" onClick={opaccityBtn}>
+                                <button className="video__right_panel__sound" onClick={opaccityBtn} data-title='прозрачность'>
                                     <svg width="19" height="19" viewBox="0 0 19 19" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -497,7 +530,7 @@ function App() {
                                             fill="#646464"/>
                                     </svg>
                                 </button>
-                                <button className="video__right_panel__cut" onClick={textBtn}>
+                                <button className="video__right_panel__cut" onClick={textBtn} data-title='текст'>
                                     <svg width="23" height="23" viewBox="0 0 23 23" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -505,7 +538,7 @@ function App() {
                                             fill="#646464"/>
                                     </svg>
                                 </button>
-                                <button className="video__right_panel__delete" onClick={sizeBtn}>
+                                <button className="video__right_panel__delete" onClick={sizeBtn} data-title='размер холста'>
                                     <svg width="23" height="23" viewBox="0 0 23 23" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -544,27 +577,27 @@ function App() {
                                                            name="singleSelect"/>
                                                     <label htmlFor="singleSelect1" className="__select__label"
                                                            onClick={selectSingle_labels}>Noto Serif
-                                                        </label>
+                                                    </label>
                                                     <input id="singleSelect3" className="__select__input" type="radio"
                                                            name="singleSelect"/>
                                                     <label htmlFor="singleSelect3" className="__select__label"
                                                            onClick={selectSingle_labels}>EB Garamond
-                                                        </label>
+                                                    </label>
                                                     <input id="singleSelect4" className="__select__input" type="radio"
                                                            name="singleSelect"/>
                                                     <label htmlFor="singleSelect4" className="__select__label"
                                                            onClick={selectSingle_labels}>Kalam
-                                                        </label>
+                                                    </label>
                                                     <input id="singleSelect5" className="__select__input" type="radio"
                                                            name="singleSelect"/>
                                                     <label htmlFor="singleSelect5" className="__select__label"
                                                            onClick={selectSingle_labels}>Space Mono
-                                                        </label>
+                                                    </label>
                                                     <input id="singleSelect6" className="__select__input" type="radio"
                                                            name="singleSelect"/>
                                                     <label htmlFor="singleSelect6" className="__select__label"
                                                            onClick={selectSingle_labels}>Cookie
-                                                        </label>
+                                                    </label>
                                                     <input id="singleSelect7" className="__select__input" type="radio"
                                                            name="singleSelect"/>
                                                     <label htmlFor="singleSelect7" className="__select__label"
@@ -725,7 +758,8 @@ function App() {
                     }}>
                         <div style={{width: 0}}>
                             <div style={{position: 'relative', width: screens.length * 147 + 20, top: 10, height: 83}}>
-                                <div style={{width: screens.length * 147, height: 83, backgroundColor: '#707070'}}></div>
+                                <div
+                                    style={{width: screens.length * 147, height: 83, backgroundColor: '#707070'}}></div>
                             </div>
                         </div>
 

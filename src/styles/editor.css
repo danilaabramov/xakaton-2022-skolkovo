@@ -164,7 +164,7 @@ main {
     background-color: #000;
 }
 .video__show__clip {
-
+    height: 340px;
 }
 .video__show__clip__buttons {
     width: 100%;
@@ -1022,4 +1022,37 @@ main {
 
 .not_active {
     display: none;
+}
+
+button[data-title]:hover::after {
+    opacity: 1;
+    -webkit-transition: all 0.2s ease 0.5s;
+    transition: all 0.2s ease 0.5s;
+    visibility: visible;
+}
+
+button[data-title]::after {
+    position: absolute;
+    content: attr(data-title);
+    position: absolute;
+    left: 50%;
+    top: -32px;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    padding: 7px;
+    margin: 0;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    background-color: #9b9b9b;
+    opacity: 0;
+}
+
+[data-title] {
+    position: relative;
 }
