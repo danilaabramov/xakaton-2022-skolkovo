@@ -8,7 +8,7 @@ function App() {
     const vid = useRef(null);
 
     const [width, setWidth] = useState(window.innerWidth)
-    const [screens, setScreens] = useState(Array(10).fill(0))
+    const [screens, setScreens] = useState(Array(15).fill(0))
     const [videos, setVideos] = useState(Array(1).fill(0))
 
     const [play, setPlay] = useState(false)
@@ -365,6 +365,8 @@ function App() {
             el0.style.left = Number(scree0.style.width.split('px')[0]) - 12.5 + 'px';
 
             el21.style.left = Number(scree0.style.width.split('px')[0]) + 12.5 + 'px';
+
+            el1.style.left = Number(el21.style.left.split('px')[0]) + Number(konh1.style.width.split('px')[0]) - 18.5 + 'px';
 
             // scree20.style.width = Number(scree20.style.width.split('px')[0]) / 2 + 'px';
             // scree21.style.width = Number(scree21.style.width.split('px')[0]) / 2 + 'px';
