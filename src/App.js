@@ -129,7 +129,12 @@ function App() {
 
         dragElement(document.getElementById("2mydiv0"));
         dragElement(document.getElementById("1mydiv0"));
-        dragElement2(document.getElementById("kontur"))
+        dragElement(document.getElementById("2mydiv1"));
+        dragElement(document.getElementById("1mydiv1"));
+
+        dragElement2(document.getElementById("kontur0"))
+        dragElement2(document.getElementById("kontur1"))
+
         dragElement2(document.getElementById("polzunok"))
 
         document.getElementById(`my-video`).addEventListener('play', () => {
@@ -152,11 +157,13 @@ function App() {
             setWidth(window.innerWidth)
         })
 
-        for (let j = 0; j < screens.length; ++j) {
-            document.getElementById(`screen${j}`).addEventListener('loadeddata', function () {
-                setDuration(vid.current.duration)
-                document.getElementById(`screen${j}`).currentTime = document.getElementById(`screen${j}`).duration / screens.length / 2 + j * document.getElementById(`screen${j}`).duration / screens.length;
-            });
+        for (let i = 0; i < 2; ++i) {
+            for (let j = 0; j < screens.length; ++j) {
+                document.getElementById(`${i}screen${j}`).addEventListener('loadeddata', function () {
+                    setDuration(vid.current.duration)
+                    document.getElementById(`${i}screen${j}`).currentTime = document.getElementById(`${i}screen${j}`).duration / screens.length / 2 + j * document.getElementById(`${i}screen${j}`).duration / screens.length;
+                });
+            }
         }
     }, [])
 
@@ -194,16 +201,18 @@ function App() {
             pos4 = e.clientY;
             // установите новое положение элемента:
             // elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+            let index = Number(elmnt.id.split('mydiv')[1])
+
             let polz = document.getElementById(`polzunok`)
-            let kon = document.getElementById(`kontur`)
-            let konh = document.getElementById(`konturheader`)
-            let scree = document.getElementById(`screens`)
-            let scree2 = document.getElementById(`screens2`)
+            let kon = document.getElementById(`kontur${index}`)
+            let konh = document.getElementById(`konturheader${index}`)
+            let scree = document.getElementById(`screens${index}`)
+            let scree2 = document.getElementById(`screens2${index}`)
 
             let shag = (elmnt.offsetLeft - pos1 < screens.length * 147 + 29 ? (elmnt.offsetLeft - pos1 > 51 ? (elmnt.offsetLeft - pos1) : 51) : screens.length * 147 + 29)
 
-            if (elmnt.id === '2mydiv0') {
-                let elleft = Number(document.getElementById(`1mydiv0`).style.left.split("px")[0])
+            if (elmnt.id === `2mydiv${index}`) {
+                let elleft = Number(document.getElementById(`1mydiv${index}`).style.left.split("px")[0])
 
                 let razn = shag - 51 - Number(kon.style.left.split("px")[0])
 
@@ -228,7 +237,7 @@ function App() {
                 }
 
             } else {
-                let elleft = Number(document.getElementById(`2mydiv0`).style.left.split("px")[0])
+                let elleft = Number(document.getElementById(`2mydiv${index}`).style.left.split("px")[0])
 
 
                 let sdvig = (elleft < shag - 40 ? shag - 40 : elleft)
@@ -649,12 +658,12 @@ function App() {
 
 
                         {
-                            [0].map((item, index) => {
+                            [0, 0].map((item, index) => {
 
                                 return (
                                     <>
                                         <div style={{width: 0}}>
-                                            <div id="screens" style={{
+                                            <div id={`screens${index}`} style={{
                                                 display: 'flex',
                                                 position: 'relative',
                                                 width: screens.length * 147,
@@ -664,16 +673,17 @@ function App() {
                                                 borderRadius: 9
                                             }}>
 
-                                                <div id="screens2" style={{
+                                                <div id={`screens2${index}`} style={{
                                                     display: 'flex',
                                                     position: 'relative',
                                                     width: screens.length * 147,
                                                     height: 83,
                                                 }}>
                                                     {
-                                                        screens.map((item, index) => {
+                                                        screens.map((item, ix) => {
                                                             return (
-                                                                <video id={`screen${index}`} width="147" height="83"
+                                                                <video id={`${index}screen${ix}`} width="147"
+                                                                       height="83"
                                                                        style={{position: 'relative'}}>
                                                                     <source src={require('./vid.mp4')}
                                                                             type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/>
@@ -685,8 +695,8 @@ function App() {
                                             </div>
                                         </div>
 
-                                        <div id="kontur" className="kontur" style={{left: 0, top: 10}}>
-                                            <div id="konturheader" className="konturheader" style={{
+                                        <div id={`kontur${index}`} className="kontur" style={{left: 0, top: 10}}>
+                                            <div id={`konturheader${index}`} className="konturheader" style={{
                                                 height: 77,
                                                 width: screens.length * 147 - 6,
                                                 borderRadius: 9,
