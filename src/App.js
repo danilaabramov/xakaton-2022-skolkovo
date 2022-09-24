@@ -127,8 +127,8 @@ function App() {
             vid.current.pause()
         });
 
-        dragElement(document.getElementById("mydiv1"));
-        dragElement(document.getElementById("mydiv2"));
+        dragElement(document.getElementById("2mydiv"));
+        dragElement(document.getElementById("1mydiv"));
         dragElement2(document.getElementById("kontur"))
         dragElement2(document.getElementById("polzunok"))
 
@@ -200,10 +200,10 @@ function App() {
             let scree = document.getElementById(`screens`)
             let scree2 = document.getElementById(`screens2`)
 
-            let shag = (elmnt.offsetLeft - pos1 < screens.length * 147 + 30 ? (elmnt.offsetLeft - pos1 > 50 ? (elmnt.offsetLeft - pos1) : 50) : screens.length * 147 + 30)
+            let shag = (elmnt.offsetLeft - pos1 < screens.length * 147 + 29 ? (elmnt.offsetLeft - pos1 > 51 ? (elmnt.offsetLeft - pos1) : 51) : screens.length * 147 + 29)
 
-            if (elmnt.id === 'mydiv2') {
-                let elleft = Number(document.getElementById(`mydiv${Number(elmnt.id[5]) - 1}`).style.left.split("px")[0])
+            if (elmnt.id === '2mydiv') {
+                let elleft = Number(document.getElementById(`1mydiv`).style.left.split("px")[0])
 
                 let razn = shag - 51 - Number(kon.style.left.split("px")[0])
 
@@ -228,7 +228,7 @@ function App() {
                 }
 
             } else {
-                let elleft = Number(document.getElementById(`mydiv${Number(elmnt.id[5]) + 1}`).style.left.split("px")[0])
+                let elleft = Number(document.getElementById(`2mydiv`).style.left.split("px")[0])
 
 
                 let sdvig = (elleft < shag - 40 ? shag - 40 : elleft)
@@ -633,8 +633,6 @@ function App() {
                 </section>
 
                 <div style={{marginTop: 92}}>
-
-
                     <div id="scroller" style={{
                         height: 120,
                         width: width - 80,
@@ -643,85 +641,96 @@ function App() {
                         padding: '0 20px',
                         margin: '0 20px',
                     }}>
-
                         <div style={{width: 0}}>
                             <div style={{position: 'relative', width: screens.length * 147 + 20, top: 10, height: 83}}>
                                 <div style={{width: screens.length * 147, height: 83, backgroundColor: 'white'}}></div>
                             </div>
                         </div>
 
-                        <div style={{width: 0}}>
-                            <div id="screens" style={{
-                                display: 'flex',
-                                position: 'relative',
-                                width: screens.length * 147,
-                                height: 83,
-                                overflow: 'hidden',
-                                top: 10,
-                                borderRadius: 9
-                            }}>
 
-                                <div id="screens2" style={{
-                                    display: 'flex',
-                                    position: 'relative',
-                                    width: screens.length * 147,
-                                    height: 83,
-                                }}>
-                                    {
-                                        screens.map((item, index) => {
-                                            return (
-                                                <video id={`screen${index}`} width="147" height="83"
-                                                       style={{position: 'relative'}}>
-                                                    <source src={require('./vid.mp4')}
-                                                            type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/>
-                                                </video>
-                                            )
-                                        })
-                                    }
-                                </div>
-                            </div>
-                        </div>
+                        {
+                            [0].map((item, index) => {
 
-                        <div id="kontur" style={{left: 0, top: 10}}>
-                            <div id="konturheader" style={{
-                                height: 77,
-                                width: screens.length * 147 - 6,
-                                borderRadius: 9,
-                                border: '3px solid #31BE00',
-                            }}></div>
-                        </div>
+                                return (
+                                    <>
+                                        <div style={{width: 0}}>
+                                            <div id="screens" style={{
+                                                display: 'flex',
+                                                position: 'relative',
+                                                width: screens.length * 147,
+                                                height: 83,
+                                                overflow: 'hidden',
+                                                top: 10,
+                                                borderRadius: 9
+                                            }}>
 
-                        <div id="mydiv1" style={{left: screens.length * 147 - 11, top: 26.5}}>
-                            <div id="mydiv1header">
-                                <div style={{
-                                    cursor: 'ew-resize',
-                                    height: 50,
-                                    width: 20,
-                                    transform: 'translateX(-50%)',
-                                    justifyContent: 'center',
-                                    display: 'flex',
-                                    padding: 16.5,
-                                    paddingRight: 0,
-                                    paddingLeft: 0
-                                }}></div>
-                            </div>
-                        </div>
-                        <div id="mydiv2" style={{left: 11, top: 26.5}}>
-                            <div id="mydiv2header">
-                                <div style={{
-                                    cursor: 'ew-resize',
-                                    height: 50,
-                                    width: 20,
-                                    transform: 'translateX(-50%)',
-                                    justifyContent: 'center',
-                                    display: 'flex',
-                                    padding: 16.5,
-                                    paddingRight: 0,
-                                    paddingLeft: 0
-                                }}>
-                                </div>
-                            </div>
-                        </div>
+                                                <div id="screens2" style={{
+                                                    display: 'flex',
+                                                    position: 'relative',
+                                                    width: screens.length * 147,
+                                                    height: 83,
+                                                }}>
+                                                    {
+                                                        screens.map((item, index) => {
+                                                            return (
+                                                                <video id={`screen${index}`} width="147" height="83"
+                                                                       style={{position: 'relative'}}>
+                                                                    <source src={require('./vid.mp4')}
+                                                                            type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/>
+                                                                </video>
+                                                            )
+                                                        })
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="kontur" className="kontur" style={{left: 0, top: 10}}>
+                                            <div id="konturheader" className="konturheader" style={{
+                                                height: 77,
+                                                width: screens.length * 147 - 6,
+                                                borderRadius: 9,
+                                                border: '3px solid #31BE00',
+                                            }}></div>
+                                        </div>
+
+                                        <div id="1mydiv" className="mydiv1"
+                                             style={{left: screens.length * 147 - 11, top: 26.5}}>
+                                            <div id="1mydivheader" className="mydiv1header">
+                                                <div style={{
+                                                    cursor: 'ew-resize',
+                                                    height: 50,
+                                                    width: 20,
+                                                    transform: 'translateX(-50%)',
+                                                    justifyContent: 'center',
+                                                    display: 'flex',
+                                                    padding: 16.5,
+                                                    paddingRight: 0,
+                                                    paddingLeft: 0
+                                                }}></div>
+                                            </div>
+                                        </div>
+                                        <div id="2mydiv" className="mydiv2" style={{left: 11, top: 26.5}}>
+                                            <div id="2mydivheader" className="mydiv2header">
+                                                <div style={{
+                                                    cursor: 'ew-resize',
+                                                    height: 50,
+                                                    width: 20,
+                                                    transform: 'translateX(-50%)',
+                                                    justifyContent: 'center',
+                                                    display: 'flex',
+                                                    padding: 16.5,
+                                                    paddingRight: 0,
+                                                    paddingLeft: 0
+                                                }}>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                )
+                            })
+                        }
+
 
                         <div style={{width: 0}}>
                             <div id="polzunok" style={{left: 0, top: 0}}></div>
