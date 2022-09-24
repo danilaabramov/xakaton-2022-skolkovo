@@ -35,17 +35,6 @@ function App() {
             btnPause = document.querySelector('.pause'),
             videoTrack = document.querySelector('.video-track'),
             time = document.querySelector('.timeLine');
-            /* input_file = document.querySelector('#input_file'),
-             * input_file_button = document.querySelector('#input_file_button');
-             */
-
-      /* const handleUpload = () => {
-       *   client.UploadVideo(input_file).then(video_id => {
-       *     console.log(`Uploaded as ${video_id}`)
-       *   })
-       * }
-       * input_file_button.addEventListener('click', handleUpload);
-       */
 
         btnPlay.addEventListener("click", function() {
             setPlay(true)
@@ -210,10 +199,6 @@ function App() {
             });
         }
 
-
-      return () => {
-        /* input_file_button.removeEventListener('click', handleUpload) */
-      }
     }, [screens])
 
     useEffect(() => {
