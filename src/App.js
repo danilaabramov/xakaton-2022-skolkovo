@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react'
 import './App.css';
 import './styles/editor.css'
 import './styles/style.css'
-import { MemoryRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 
 function VideoEditor() {
 
@@ -1014,11 +1014,11 @@ function Main() {
 
 export default function App() {
     return (
-        <Router>
+
             <Routes>
                 <Route exact path="/" element={<Main/>}/>
                 <Route path="/video-editor" element={<VideoEditor/>}/>
             </Routes>
-        </Router>
+      
     );
 }
