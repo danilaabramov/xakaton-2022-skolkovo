@@ -401,6 +401,10 @@ function App() {
         }
     }
 
+    const deleteVideo = () => {
+        setVideos(Array(1).fill(0))
+    }
+
     return (
         <div className="App">
             <header>
@@ -440,7 +444,7 @@ function App() {
                                             fill="black"/>
                                     </svg>
                                 </button>
-                                <button className="video__left_panel__delete" data-title='удалить'>
+                                <button className="video__left_panel__delete" onClick={deleteVideo} data-title='удалить'>
                                     <svg width="18" height="20" viewBox="0 0 18 20" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
