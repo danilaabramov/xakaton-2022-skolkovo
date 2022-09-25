@@ -12,8 +12,6 @@ function VideoEditor() {
 
     const location = useLocation()
 
-    console.log(URL)
-
     const vid = useRef(null);
 
     const [width, setWidth] = useState(window.innerWidth)
@@ -423,7 +421,6 @@ function VideoEditor() {
         setVideos(Array(1).fill(0))
     }
 
-
     return (
         <div className="App" style={{overflowX: 'hidden'}}>
             <header>
@@ -482,14 +479,13 @@ function VideoEditor() {
                                 <div className="video__show">
                                     <video className="video__show__clip" ref={vid} id="my-video" width="720"
                                            height="405">
-                                        <source src={location.state.video_url ? location.state.video_url : require('./vid.mp4')} type='video/mp4'/>
+                                        <source src={location?.state?.video_url ? location.state.video_url : require('./vid.mp4')} type='video/mp4'/>
                                     </video>
                                 </div>
                                 <div id="controls" className="video__controls">
                                     <div className="video__show__clip__buttons">
                                         <div className="video__show__clip__time-line">
-                                            {/*< REACT выводить время -->*/}
-                                            <p>{currentTime.toFixed(2)} / {duration.toFixed(2)}</p>
+                                            <p> {Math.floor(currentTime / 60)}:{ (currentTime % 60).toFixed(2) } / {Math.floor(duration / 60)}:{(duration % 60).toFixed(2)}</p>
                                         </div>
                                         <div className="video__show__clip__arrows">
                                             <button className="video__show__clip__arrows__back" data-title='отменить'>
@@ -822,7 +818,7 @@ function VideoEditor() {
                                                                     <video id={`${index}screen${ix}`} width="147"
                                                                            height="83"
                                                                            style={{position: 'relative'}}>
-                                                                        <source src={location.state.video_url ? location.state.video_url : require('./vid.mp4')}
+                                                                        <source src={location?.state?.video_url ? location.state.video_url : require('./vid.mp4')}
                                                                                 type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/>
                                                                     </video>
                                                                 )
@@ -957,6 +953,8 @@ function VideoEditor() {
         </div>
     );
 }
+
+
 
 function Main() {
     const [width, setWidth] = useState(window.innerWidth)
