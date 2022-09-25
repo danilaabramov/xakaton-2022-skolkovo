@@ -983,12 +983,12 @@ function VideoEditor() {
                         </div>
                     </div>
 
-                    <section className="road_section" style={{position: 'relative', top: 70}}>
+                    <section className="road_section" style={{position: 'relative', top: 80}}>
                         <div className="road">
 
-                            <div className="road__btn" style={{transform: 'scale(0.9)'}}>
-                                <div className="road__btn__back">
-                                    <button className="road__btn__inside" onClick={addContent}>
+                            <div className="road__btn">
+                                <div className="road__btn__back" onClick={addContent} style={{height: 83, width: 83, cursor: "pointer", backgroundColor: '#707070'}}>
+                                    <button className="road__btn__inside">
                                         <svg width="37" height="38" viewBox="0 0 37 38" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
                                             <path d="M1.75879 18.9769H35.1496" stroke="black" stroke-width="2"

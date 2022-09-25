@@ -1110,6 +1110,7 @@ button[data-title]::after {
     -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
     cursor: pointer;
+    background-color: #9B9B9B;
 }
 .road__btn__block {
     position: absolute;
