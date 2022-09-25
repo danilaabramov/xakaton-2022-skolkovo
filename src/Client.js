@@ -25,6 +25,19 @@ export default class Client {
         let resp = await this.impl.Post('upload', form_data)
         return await resp.json()
     }
+
+
+    async ProcessVideo(timeSegments, format) {
+        let body = {
+            'fragments': timeSegments,
+            'format': format
+        }
+        let params = {
+            headers: { 'Content-Type': 'application/json' },
+        }
+        let resp = await this.impl.Post('process', JSON.stringify(body), params)
+        return await resp.json()
+    }
 }
 
 
