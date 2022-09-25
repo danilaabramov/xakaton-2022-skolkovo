@@ -1,19 +1,18 @@
 import React, {useEffect, useRef, useState} from 'react'
-import Client from './Client.js'
 import './App.css';
 import './styles/editor.css'
 import './styles/style.css'
 import {useNavigate, Routes, Route, Link, useLocation} from "react-router-dom";
 
-
-let client = new Client()
-
 function VideoEditor() {
-
 
     ///////////отправить на бэк
     const [timeSegments, setTimeSegments] = useState([[], []])
     ///////////
+
+    const location = useLocation()
+
+    console.log(URL)
 
     const vid = useRef(null);
 
@@ -37,9 +36,6 @@ function VideoEditor() {
     const [selectSingle2, setSelectSingle2] = useState(false)
 
     const [addActive, setAddActive] = useState(false)
-
-
-    const location = useLocation()
 
     // Кнопка звук
     const soundBtn = () => {
@@ -134,6 +130,7 @@ function VideoEditor() {
     }
 
     useEffect(() => {
+
 
         document.querySelector('.play').addEventListener("click", function () {
             setPlay(true)
@@ -485,7 +482,7 @@ function VideoEditor() {
                                 <div className="video__show">
                                     <video className="video__show__clip" ref={vid} id="my-video" width="720"
                                            height="405">
-                                        <source src={location.state.video_url} type='video/mp4'/>
+                                        <source src={location.state.video_url ? location.state.video_url : require('./vid.mp4')} type='video/mp4'/>
                                     </video>
                                 </div>
                                 <div id="controls" className="video__controls">
@@ -535,7 +532,7 @@ function VideoEditor() {
                                 <div className="video__right_panel__mixer"
                                      style={{display: opaccityBlock ? '' : 'none'}}>
                                     <input type="range" min="0" max="100" step="1" value="100"
-                                           className="video__right_panel__mixer__range"/>
+                                           className="video__right_panel__mixer__range" onChange={()=>{}}/>
                                 </div>
                                 <button className="video__right_panel__sound" onClick={opaccityBtn}
                                         data-title={opaccityBlock ? null : 'прозрачность'}>
@@ -586,7 +583,7 @@ function VideoEditor() {
                                                 </div>
                                                 <div className="__select__content">
                                                     <input id="singleSelect10" className="__select__input" type="radio"
-                                                           name="singleSelect" checked/>
+                                                           name="singleSelect"/>
                                                     <label htmlFor="singleSelect10" className="__select__label"
                                                            onClick={selectSingle_labels}>Open Sans</label>
                                                     <input id="singleSelect0" className="__select__input" type="radio"
@@ -636,13 +633,13 @@ function VideoEditor() {
                                                     <div className="__select__content2">
                                                         <input id="singleSelect10" className="__select__input2"
                                                                type="radio"
-                                                               name="singleSelect" checked/>
+                                                               name="singleSelect"/>
                                                         <label htmlFor="singleSelect10"
                                                                className="__select__label2"
                                                                onClick={selectSingle_labels2}>14</label>
                                                         <input id="singleSelect0" className="__select__input2"
                                                                type="radio"
-                                                               name="singleSelect" checked/>
+                                                               name="singleSelect"/>
                                                         <label htmlFor="singleSelect0"
                                                                className="__select__label2"
                                                                onClick={selectSingle_labels2}>14</label>
@@ -825,7 +822,7 @@ function VideoEditor() {
                                                                     <video id={`${index}screen${ix}`} width="147"
                                                                            height="83"
                                                                            style={{position: 'relative'}}>
-                                                                        <source src={require('./vid.mp4')}
+                                                                        <source src={location.state.video_url ? location.state.video_url : require('./vid.mp4')}
                                                                                 type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/>
                                                                     </video>
                                                                 )
@@ -976,9 +973,17 @@ function Main() {
     }
 
     function uploadFile(file) {
-        let video_id = client.UploadVideo(file)
-            .then(() => { })
-            .catch(() => { })
+        let url = 'Куда закинуть видео?'
+        let formData = new FormData()
+        formData.append('file', file)
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+            .then(() => {})
+            .catch(() => {})
+
+        console.log(URL.createObjectURL(file))
         navigate('/video-editor', {
             state: {
                 video_url: URL.createObjectURL(file)
@@ -1050,7 +1055,8 @@ function Main() {
                                         <p className="description__p">Или перетащите файл сюда</p>
                                     </div>
                                     <input type="file" id="fileElem" multiple accept="video/*"
-                                           onChange={(e) => uploadFile(e.target.files[0])}/>
+                                           onChange={(e) => uploadFile(e.target.files[0])}
+                                          />
                                 </form>
                             </div>
                         </div>
@@ -1062,7 +1068,7 @@ function Main() {
                     <div style={{width: width - 8, display: 'flex'}}>
                         <div style={{margin: 'auto'}}>
                             <p className="footer__description">© KomandniyDuh, 2022</p>
-                            <Link to="/video-editor">След страница</Link>
+                            {/*<Link to="/video-editor">След страница</Link>*/}
                         </div>
                     </div>
                 </section>
