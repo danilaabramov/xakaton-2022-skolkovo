@@ -153,7 +153,18 @@ function VideoEditor() {
 
             let inter = setInterval(() => {
                 setCurrenTime((document.getElementById(`my-video`).currentTime))
+
+                if(document.getElementById(`my-video`).currentTime > timeSegments[0][1] && document.getElementById(`my-video`).currentTime < timeSegments[1][0] - 0.01)
+                {
+                    document.getElementById(`my-video`).currentTime = timeSegments[1][0]
+                    document.getElementById(`my-video`).play()
+                }
+
+
                 document.getElementById(`polzunok`).style.left = (document.getElementById(`my-video`).currentTime / document.getElementById(`my-video`).duration * (screens.length * 147)) + "px"
+
+
+
             }, 10)
 
             document.getElementById(`my-video`).addEventListener('pause', () => {
@@ -281,7 +292,7 @@ function VideoEditor() {
                     setCurrenTime((document.getElementById(`my-video`).currentTime))
 
                     let ts = timeSegments
-                    ts[index][1] = video.duration * (shag - 51) / (screens.length * 147) + 21
+                    ts[index][1] = video.duration * (shag - 29) / (screens.length * 147)
                     console.log(ts)
                     setTimeSegments(ts)
 
