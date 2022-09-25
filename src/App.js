@@ -907,7 +907,8 @@ function VideoEditor() {
                                                     height: 83,
                                                     overflow: 'hidden',
                                                     top: 10,
-                                                    borderRadius: 9
+                                                    borderRadius: 9,
+                                                    transform: 'scale(1)'
                                                 }}>
 
                                                     <div id={`screens2${index}`} style={{
@@ -915,6 +916,7 @@ function VideoEditor() {
                                                         position: 'relative',
                                                         width: screens.length * 147,
                                                         height: 83,
+                                                        transform: 'scale(1)'
                                                     }}>
                                                         {
                                                             screens.map((item, ix) => {
