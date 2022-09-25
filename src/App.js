@@ -420,6 +420,10 @@ function VideoEditor() {
 
     const deleteVideo = () => {
         setVideos(Array(1).fill(0))
+        let ts = timeSegments
+        ts[1] = [vid.current.duration, vid.current.duration]
+        console.log(ts)
+        setTimeSegments(ts)
     }
 
     return (
@@ -485,8 +489,13 @@ function VideoEditor() {
                                 </div>
                                 <div id="controls" className="video__controls">
                                     <div className="video__show__clip__buttons">
-                                        <div className="video__show__clip__time-line">
-                                            <p> {Math.floor(currentTime / 60)}:{ (currentTime % 60).toFixed(2) } / {Math.floor(duration / 60)}:{(duration % 60).toFixed(2)}</p>
+                                        <div className="video__show__clip__time-line" style={{display: 'flex'}}>
+                                            <p style={{width: 75, display: 'block'}}> {String(Math.floor(currentTime / 60)).padStart(2, '0')}
+                                                :{ String((currentTime % 60).toFixed(2)).padStart(5, '0') }
+                                                </p>
+                                            <p>
+                                                / {String(Math.floor(duration / 60)).padStart(2, '0')}
+                                                :{String((duration % 60).toFixed(2)).padStart(5, '0')}</p>
                                         </div>
                                         <div className="video__show__clip__arrows">
                                             <button className="video__show__clip__arrows__back" data-title='отменить'>
