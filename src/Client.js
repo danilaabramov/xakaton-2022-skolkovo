@@ -18,9 +18,9 @@ export default class Client {
 
 
     // input: DOM node matching selector input[type="file"]
-    async UploadVideo(input) {
+    async UploadVideo(file) {
         var form_data = new FormData()
-        form_data.append('file', input.files[0])
+        form_data.append('file', file)
 
         let resp = await this.impl.Post('upload', form_data)
         return await resp.json()

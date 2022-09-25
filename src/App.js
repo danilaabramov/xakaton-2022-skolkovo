@@ -1,8 +1,29 @@
 import React, {useEffect, useRef, useState} from 'react'
+import Client from './Client.js'
 import './App.css';
 import './styles/editor.css'
 import './styles/style.css'
 import {useNavigate, Routes, Route, Link, useLocation} from "react-router-dom";
+
+
+let client = new Client()
+
+
+function GetVideoInfo(file, cb) {
+    let video = document.createElement('video')
+    video.preload = 'metadata'
+    video.onloadedmetadata = () => {
+        URL.revokeObjectURL(video.src)
+        let video_info = {
+            id: null,
+            file: file,
+            begin: 0,
+            end: video.duration
+        }
+        cb(video_info)
+    }
+    video.src = file
+}
 
 function VideoEditor() {
 
@@ -18,6 +39,9 @@ function VideoEditor() {
     const [screens, setScreens] = useState(Array(15).fill(0))
     const [videos, setVideos] = useState(Array(1).fill(0))
 
+    /* const [newVideos, setNewVideos] = useState([])
+* const [currentVideo, setCurrentVideo] = useState([])
+ */
     const [play, setPlay] = useState(false)
 
     const [soundBlock, setSoundBlock] = useState(false)
@@ -34,6 +58,24 @@ function VideoEditor() {
     const [selectSingle2, setSelectSingle2] = useState(false)
 
     const [addActive, setAddActive] = useState(false)
+
+
+    /* GetVideoInfo(location.state.video_file, video_info => {
+*     setNewVideos([video_info])
+*     setCurrentVideo(video_info)
+
+*     client.UploadVideo(location.state.video_file)
+*         .then(videoId => {
+*             var lastVideo = newVideos[newVideos.length - 1]
+*             lastVideo.id = videoId
+*             console.log(`Video uploaded as ${videoId}`)
+*             console.log(`Videos ${newVideos}`)
+*         })
+*         .catch(e => {
+*             console.log(`Failed to upload video: ${e}`)
+*         })
+* })
+ */
 
     // Кнопка звук
     const soundBtn = () => {
@@ -495,7 +537,7 @@ function VideoEditor() {
                                 <div className="video__show">
                                     <video className="video__show__clip" ref={vid} id="my-video" width="720"
                                            height="405">
-                                        <source src={location?.state?.video_url ? location.state.video_url : require('./vid.mp4')} type='video/mp4'/>
+                                        <source src={URL.createObjectURL(location.state.video_file)} type='video/mp4'/>
                                     </video>
                                 </div>
                                 <div id="controls" className="video__controls">
@@ -992,20 +1034,9 @@ function Main() {
     }
 
     function uploadFile(file) {
-        let url = 'Куда закинуть видео?'
-        let formData = new FormData()
-        formData.append('file', file)
-        fetch(url, {
-            method: 'POST',
-            body: formData
-        })
-            .then(() => {})
-            .catch(() => {})
-
-        console.log(URL.createObjectURL(file))
         navigate('/video-editor', {
             state: {
-                video_url: URL.createObjectURL(file)
+                video_file: file
             },
         })
     }
