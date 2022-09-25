@@ -919,7 +919,7 @@ function VideoEditor() {
                                                                     <video id={`${index}screen${ix}`} width="147"
                                                                            height="83"
                                                                            style={{position: 'relative'}}>
-                                                                        <source src={location?.state?.video_url ? location.state.video_url : require('./vid.mp4')}
+                                                                        <source src={URL.createObjectURL(location.state.video_file)}
                                                                                 type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/>
                                                                     </video>
                                                                 )
