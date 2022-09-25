@@ -39,9 +39,8 @@ function VideoEditor() {
     const [screens, setScreens] = useState(Array(15).fill(0))
     const [videos, setVideos] = useState(Array(1).fill(0))
 
-    /* const [newVideos, setNewVideos] = useState([])
-* const [currentVideo, setCurrentVideo] = useState([])
- */
+    const [videoId, setVideoId] = useState(null)
+
     const [play, setPlay] = useState(false)
 
     const [soundBlock, setSoundBlock] = useState(false)
@@ -60,22 +59,15 @@ function VideoEditor() {
     const [addActive, setAddActive] = useState(false)
 
 
-    /* GetVideoInfo(location.state.video_file, video_info => {
-*     setNewVideos([video_info])
-*     setCurrentVideo(video_info)
-
-*     client.UploadVideo(location.state.video_file)
-*         .then(videoId => {
-*             var lastVideo = newVideos[newVideos.length - 1]
-*             lastVideo.id = videoId
-*             console.log(`Video uploaded as ${videoId}`)
-*             console.log(`Videos ${newVideos}`)
-*         })
-*         .catch(e => {
-*             console.log(`Failed to upload video: ${e}`)
-*         })
-* })
- */
+    useEffect(() => {
+        client.UploadVideo(location.state.video_file)
+            .then(uploadedVideoId => {
+                setVideoId(uploadedVideoId)
+            })
+            .catch(e => {
+                console.log(`Failed to upload video: ${e}`)
+            })
+    }, [])
 
     // Кнопка звук
     const soundBtn = () => {
@@ -139,6 +131,26 @@ function VideoEditor() {
     // Выбор формата
     const saveFormatListElem = () => {
         setFormatBlock(false)
+
+        const video = document.getElementById(`my-video`)
+
+        let fragments = []
+        for (let segment in timeSegments) {
+            fragments.push({
+                video_id: videoId,
+                begin: parseInt(segment[0]),
+                end: segment[1] ? parseInt(segment[1]) : video.duration,
+            })
+        }
+
+        client.ProcessVideo(fragments, '.mp4')
+            .then(res => res.blob())
+            .then(blob => {
+                var a = document.createElement("a")
+                a.href = URL.createObjectURL(blob)
+                a.download = "result.mp4"
+                a.click()
+            })
     }
 
     // Toggle menu

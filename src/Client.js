@@ -35,8 +35,7 @@ export default class Client {
         let params = {
             headers: { 'Content-Type': 'application/json' },
         }
-        let resp = await this.impl.Post('process', JSON.stringify(body), params)
-        return await resp.json()
+        return await this.impl.Post('process', JSON.stringify(body), params)
     }
 }
 
@@ -52,10 +51,11 @@ class ClientImpl {
         })
     }
 
-    async Post(url, data = {}) {
+    async Post(url, data = {}, params = {}) {
         return await this.Request(url, {
             method: 'POST',
-            body: data
+            body: data,
+            ...params
         })
     }
 
