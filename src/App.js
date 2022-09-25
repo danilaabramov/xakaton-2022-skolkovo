@@ -355,6 +355,7 @@ function VideoEditor() {
             let val = this.value
             document.querySelector('.video__left_panel__mixer__range').style.background = `-moz-linear-gradient(left, #000 0%, #000 ${val}%, $grey ${val}%, $grey 100%) !important`
             console.log(val)
+            vid.current.volume = val / 100
         });
     }
 
@@ -436,7 +437,7 @@ function VideoEditor() {
                             <div className="video__left_panel">
                                 <div className="video__left_panel__mixer"
                                      style={{opacity: soundBlock ? '1' : '0', pointerEvents: soundBlock ? '' : 'none'}}>
-                                    <input type="range" min={0} max={100} step={1} onInput={color}
+                                    <input type="range" min={0} max={100} step={1} onChange={color}
                                            className="video__left_panel__mixer__range"/>
                                 </div>
                                 <button className="video__left_panel__sound" onClick={soundBtn}
