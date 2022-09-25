@@ -242,7 +242,7 @@ function VideoEditor() {
     }, [videos, timeSegments])
 
     useEffect(() => {
-            if (play)
+            if (play === true) {
                 if (videos.length === 2) {
                     if (document.getElementById(`my-video`).currentTime > timeSegments[0][1] && document.getElementById(`my-video`).currentTime < timeSegments[1][0] - 0.01) {
                         document.getElementById(`my-video`).currentTime = timeSegments[1][0]
@@ -255,16 +255,17 @@ function VideoEditor() {
                     }
                 }
 
-            if (videos.length === 1) {
-                if (document.getElementById(`my-video`).currentTime > timeSegments[0][1]) {
+                if (videos.length === 1) {
+                    if (document.getElementById(`my-video`).currentTime > timeSegments[0][1]) {
+                        document.getElementById(`my-video`).currentTime = timeSegments[0][0]
+                        document.getElementById(`my-video`).play()
+                    }
+                }
+
+                if (document.getElementById(`my-video`).currentTime < timeSegments[0][0]) {
                     document.getElementById(`my-video`).currentTime = timeSegments[0][0]
                     document.getElementById(`my-video`).play()
                 }
-            }
-
-            if (document.getElementById(`my-video`).currentTime < timeSegments[0][0]) {
-                document.getElementById(`my-video`).currentTime = timeSegments[0][0]
-                document.getElementById(`my-video`).play()
             }
 
         }, [currentTime]
@@ -970,7 +971,10 @@ function VideoEditor() {
 
 
                             <div style={{width: 0}}>
-                                <div id="polzunok" style={{left: 0, top: 0}}></div>
+                                <div id="polzunok" style={{left: 0, top: 0}}>
+                                    <div style={{border: '5px solid transparent', borderTop: '20px solid brown', position: 'relative', cursor: 'pointer', left: -3}}>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
