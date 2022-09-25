@@ -206,18 +206,10 @@ function VideoEditor() {
         document.getElementById(`my-video`).addEventListener('play', () => {
 
             let inter = setInterval(() => {
-                setCurrenTime((document.getElementById(`my-video`).currentTime))
-
-                if(document.getElementById(`my-video`).currentTime > timeSegments[0][1] && document.getElementById(`my-video`).currentTime < timeSegments[1][0] - 0.01)
-                {
-                    document.getElementById(`my-video`).currentTime = timeSegments[1][0]
-                    document.getElementById(`my-video`).play()
-                }
-
 
                 document.getElementById(`polzunok`).style.left = (document.getElementById(`my-video`).currentTime / document.getElementById(`my-video`).duration * (screens.length * 147)) + "px"
 
-
+                setCurrenTime((document.getElementById(`my-video`).currentTime))
 
             }, 10)
 
@@ -248,6 +240,35 @@ function VideoEditor() {
             }
         }
     }, [videos, timeSegments])
+
+    useEffect(() => {
+            if (play)
+                if (videos.length === 2) {
+                    if (document.getElementById(`my-video`).currentTime > timeSegments[0][1] && document.getElementById(`my-video`).currentTime < timeSegments[1][0] - 0.01) {
+                        document.getElementById(`my-video`).currentTime = timeSegments[1][0]
+                        document.getElementById(`my-video`).play()
+                    }
+
+                    if (document.getElementById(`my-video`).currentTime > timeSegments[1][1]) {
+                        document.getElementById(`my-video`).currentTime = timeSegments[0][0]
+                        document.getElementById(`my-video`).play()
+                    }
+                }
+
+            if (videos.length === 1) {
+                if (document.getElementById(`my-video`).currentTime > timeSegments[0][1]) {
+                    document.getElementById(`my-video`).currentTime = timeSegments[0][0]
+                    document.getElementById(`my-video`).play()
+                }
+            }
+
+            if (document.getElementById(`my-video`).currentTime < timeSegments[0][0]) {
+                document.getElementById(`my-video`).currentTime = timeSegments[0][0]
+                document.getElementById(`my-video`).play()
+            }
+
+        }, [currentTime]
+    )
 
 
     function dragElement(elmnt) {
@@ -582,20 +603,24 @@ function VideoEditor() {
                                         </div>
                                     </div>
                                     <button className="video__show__clip__buttons__play">
-                                        <svg className="play" style={{display: play ? 'none' : ''}} width="33"
-                                             height="33"
-                                             viewBox="0 0 33 33" fill="none"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M9.625 8.25V24.75L23.375 16.5L9.625 8.25Z" fill="black"/>
-                                        </svg>
-                                        <svg className="pause" style={{display: play ? '' : 'none'}} width="33"
-                                             height="33"
-                                             viewBox="0 0 33 33"
-                                             fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M11 9.625H15.125V23.375H11V9.625ZM17.875 9.625H22V23.375H17.875V9.625Z"
-                                                fill="black"/>
-                                        </svg>
+                                        <div className="play" style={{width: '100%', display: play ? 'none' : ''}}>
+                                            <svg  width="33"
+                                                  height="33"
+                                                  viewBox="0 0 33 33" fill="none"
+                                                  xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.625 8.25V24.75L23.375 16.5L9.625 8.25Z" fill="black"/>
+                                            </svg>
+                                        </div>
+                                        <div className="pause" style={{width: '100%', display: play ? '' : 'none'}}>
+                                            <svg width="33"
+                                                 height="33"
+                                                 viewBox="0 0 33 33"
+                                                 fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M11 9.625H15.125V23.375H11V9.625ZM17.875 9.625H22V23.375H17.875V9.625Z"
+                                                    fill="black"/>
+                                            </svg>
+                                        </div>
                                     </button>
                                 </div>
                             </div>
