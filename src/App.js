@@ -1,10 +1,15 @@
 import React, {useEffect, useRef, useState} from 'react'
+import Client from './Client.js'
 import './App.css';
 import './styles/editor.css'
 import './styles/style.css'
-import {useNavigate, Routes, Route, Link} from "react-router-dom";
+import {useNavigate, Routes, Route, Link, useLocation} from "react-router-dom";
+
+
+let client = new Client()
 
 function VideoEditor() {
+
 
     ///////////отправить на бэк
     const [timeSegments, setTimeSegments] = useState([[], []])
@@ -32,6 +37,9 @@ function VideoEditor() {
     const [selectSingle2, setSelectSingle2] = useState(false)
 
     const [addActive, setAddActive] = useState(false)
+
+
+    const location = useLocation()
 
     // Кнопка звук
     const soundBtn = () => {
@@ -126,7 +134,6 @@ function VideoEditor() {
     }
 
     useEffect(() => {
-
 
         document.querySelector('.play').addEventListener("click", function () {
             setPlay(true)
@@ -478,7 +485,7 @@ function VideoEditor() {
                                 <div className="video__show">
                                     <video className="video__show__clip" ref={vid} id="my-video" width="720"
                                            height="405">
-                                        <source src={require('./vid.mp4')} type='video/mp4'/>
+                                        <source src={location.state.video_url} type='video/mp4'/>
                                     </video>
                                 </div>
                                 <div id="controls" className="video__controls">
@@ -969,20 +976,12 @@ function Main() {
     }
 
     function uploadFile(file) {
-        let url = 'Куда закинут видео?'
-        let URL = 'Откуда взять видео?'
-        let formData = new FormData()
-        formData.append('file', file)
-        fetch(url, {
-            method: 'POST',
-            body: formData
-        })
-            .then(() => {})
-            .catch(() => {})
-
+        let video_id = client.UploadVideo(file)
+            .then(() => { })
+            .catch(() => { })
         navigate('/video-editor', {
             state: {
-                URL
+                video_url: URL.createObjectURL(file)
             },
         })
     }
